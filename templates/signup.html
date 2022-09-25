@@ -1,0 +1,239 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link href="static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="static/css/site.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+
+    <script src="static/js/uikit.min.js"></script>
+    <script src="static/js/uikit-icons.min.js"></script>
+    <title>Sign Up:Find My Blood</title>
+</head>
+<body>
+    
+    {% if rec %}
+        <div class="uk-card uk-card-default uk-card-body uk-width-1-3@m uk-align-center uk-text-center  round">
+            <h3 class="uk-card-title">Find My Blood <i class="fas fa-tint" style="color: #951A23;"></i></h3><br>
+        
+            <p>
+                
+                <form action="/signupworker" method="POST">
+                    
+                
+                    <div class="uk-margin">
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="icon: user"></span>
+                            <input class="uk-input uk-text-center uk-form-width-large round" type="email" name="email" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                            <input class="uk-input uk-text-center uk-form-width-large round" type="password" name="password" placeholder="Password"/>
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="icon: user"></span>
+                            <input class="uk-input uk-text-center uk-form-width-large round" type="text" name="name" placeholder="Name"/>
+                        </div>
+                    </div>
+                    <div class="uk-margin">
+                        <div class="uk-inline">
+                            <span class="uk-form-icon" uk-icon="icon: phone"></span>
+                            <input class="uk-input uk-text-center uk-form-width-large round" type="tel" name="phone" placeholder="(XXX)-XXX-XXXX"/>
+                        </div>
+                    </div>
+                    
+                    <input type="hidden" id="lat" name="lat">
+                    <input type="hidden" id="long" name="long">
+
+                    
+                    <div>
+                        <select class="uk-select uk-width-1-4 round" name="gender">
+                            <option disabled selected hidden> Gender</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+                        </select>
+                        <select class="uk-select uk-width-1-5 round" name="age">
+                            <option disabled selected hidden> Age</option>
+                            {% for i in n %}
+                            <option>{{i}}</option>
+                            {% endfor %}
+                            
+                        </select>
+                        
+                        <select class="uk-select uk-width-2-5 round" name="group">
+                            <option disabled selected hidden> Blood Group</option>
+                            <option>A+</option>
+                            <option>A-</option>
+                            <option>B+</option>
+                            <option>B-</option>
+                            <option>O+</option>
+                            <option>O-</option>
+                            <option>AB+</option>
+                            <option>AB-</option>
+                        </select>
+                        <br><br>
+                    </div>
+                    
+                    <input class=" uk-button uk-button-primary uk-button-large round" type="submit" value="Sign Up"/>
+
+                </form>
+                
+            </p>
+            
+        </div>
+    {% endif %}
+    {% if donor %}
+    <div class="uk-card uk-card-default uk-card-body uk-width-5-6@m uk-align-center uk-text-center round">
+        <h3 class="uk-card-title">Find My Blood <i class="fas fa-tint" style="color: #951A23;"></i></h3><br>
+        
+            
+                <form action="/signupworker" method="POST" onsubmit="validateForm();">
+                    <div class="uk-grid">
+                        <div class="uk-width-2-5 uk-padding">
+                            
+                            <div class="uk-margin">
+                                <div class="uk-inline">
+                                    <span class="uk-form-icon" uk-icon="icon: user"></span>
+                                    <input class="uk-input uk-text-center uk-form-width-large round" type="email" name="email" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="uk-margin">
+                                <div class="uk-inline">
+                                    <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                                    <input class="uk-input uk-text-center uk-form-width-large round" type="password" name="password" placeholder="Password"/>
+                                </div>
+                            </div>
+                            <div class="uk-margin">
+                                <div class="uk-inline">
+                                    <span class="uk-form-icon" uk-icon="icon: user"></span>
+                                    <input class="uk-input uk-text-center uk-form-width-large round" type="text" name="name" placeholder="Name"/>
+                                </div>
+                            </div>
+                            <div class="uk-margin">
+                                <div class="uk-inline">
+                                    <span class="uk-form-icon" uk-icon="icon: phone"></span>
+                                    <input class="uk-input uk-text-center uk-form-width-large round" type="tel" name="phone" placeholder="(XXX)-XXX-XXXX"/>
+                                </div>
+                            </div>
+
+                            
+                            <input type="hidden" id="lat" name="lat">
+                            <input type="hidden" id="long" name="long">
+
+                            
+                            <div>
+                                <select class="uk-select uk-width-2-5 round" name="gender">
+                                    <option disabled selected hidden> Gender</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Other</option>
+                                </select>
+                                <select class="uk-select uk-width-1-6 round" name="age">
+                                    <option disabled selected hidden> Age</option>
+                                    {% for i in n %}
+                                    <option>{{i}}</option>
+                                    {% endfor %}
+                                    
+                                </select>
+                                
+                                <select class="uk-select uk-width-2-5 round" name="group">
+                                    <option disabled selected hidden> Blood Group</option>
+                                    <option>A+</option>
+                                    <option>A-</option>
+                                    <option>B+</option>
+                                    <option>B-</option>
+                                    <option>O+</option>
+                                    <option>O-</option>
+                                    <option>AB+</option>
+                                    <option>AB-</option>
+                                </select>
+                                
+                            </div>
+                        </div>
+                        <hr class="uk-divider-vertical" style="height: 40vh; padding: 10px;">
+                        <div class="uk-width-auto">
+                            <!-- <h3>Questionaire</h3> -->
+                            <br>
+                            <table class="uk-table uk-text-left">
+
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            Are you in good health, feel well and not taking any antibiotics ?
+                                        </td>
+                                        <td>
+                                            <span class="uk-align-right">
+                                                <label><input class="uk-radio" type="radio" name="radio1" value="1">Yes</label>
+
+                                                <label><input class="uk-radio" type="radio" name="radio1" value="0">No</label>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Did you get a tatto in the last 3 months ? 
+                                        </td>
+                                        <td>
+                                            <span class="uk-align-right">
+                                                <label><input class="uk-radio" type="radio" name="radio2" value="1" >Yes</label>
+                                                <label><input class="uk-radio" type="radio" name="radio2" value="0">No</label>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Did you recieve a blood transfusion in the last 3 months ?
+                                        </td>
+                                        <td>
+                                            <span class="uk-align-right">
+                                                <label><input class="uk-radio" type="radio" name="radio3"value="1" >Yes</label>
+                                                <label><input class="uk-radio" type="radio" name="radio3" value="0">No</label>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Did you take any recreational drugs in the last 3 months ? 
+                                        </td>
+                                        <td>
+                                            <span class="uk-align-right">
+                                                <label><input class="uk-radio" type="radio" name="radio4" value="1" >Yes</label>
+                                                <label><input class="uk-radio" type="radio" name="radio4" value="0">No</label>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br><br>
+                    <input class=" uk-button uk-button-primary uk-button-large round" type="submit" value="Sign Up"/>
+
+                </form>
+
+            
+          
+        
+    </div>
+
+    {% endif %}
+
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="{% static "js/init.js" %}"></script>
+    <script src="{% static "js/script.js" %}"></script>
+    <script src="https://kit.fontawesome.com/e0a08b5c11.js" crossorigin="anonymous"></script>
+</body>
+</html>
+
