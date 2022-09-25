@@ -63,8 +63,9 @@ def signupworker(request):
         lat = request.POST.get('lat')
         longi = request.POST.get('long')
         group = request.POST.get('group')
+        phone = request.POST.get('phone')
 
-        dic = {'bloodgroup' : group, 'location':'('+lat+','+longi+')', 'name':name, 'email':email, 'password':password}
+        dic = {'bloodgroup' : group, 'location':'('+lat+','+longi+')', 'name':name, 'email':email, 'password':password, 'phone':phone}
         
         if request.POST.get('radio1'):
             r1 = request.POST.get('radio1')
