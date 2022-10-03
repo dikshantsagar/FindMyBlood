@@ -17,7 +17,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
-cred = credentials.Certificate("static/data/blood-ed205-firebase-adminsdk-eqmtk-2bffc253fb.json")
+cred = credentials.Certificate("static/data/blood-ed205-firebase-adminsdk-eqmtk-cd30934137.json")
 
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://blood-ed205-default-rtdb.firebaseio.com',
