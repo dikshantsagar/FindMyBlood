@@ -17,6 +17,11 @@
     <title>Sign Up:Find My Blood</title>
 </head>
 <body>
+    <form method="post" action="/signin">
+        <input type="hidden" value="{{request.session.user.email}}" name="email">
+        <input type="hidden" value="{{request.session.user.password}}" name="password">
+        <button class="uk-position-top-left uk-position-medium" uk-icon="icon: arrow-left; ratio:2" style="fill:white; color: white;"></button>
+    </form>
     
 
     <div class="uk-card uk-card-default uk-card-body uk-width-5-6@m uk-align-center uk-text-center round" style="overflow: scroll; max-height: 70vh;">
@@ -52,8 +57,8 @@
                         <div class="uk-text-align-right uk-width-1-6">
                             <ul class="uk-iconnav uk-position-center uk-position-relative">
                                 
-                                <li class="uk-margin-small-right"><a href="tel:{{ i.phone }}" style="color: #951A23;"><i class="fas fa-mobile-alt fa-2x"></i></a></li>
-                                <li class="uk-margin-small-right"><a href="sms:{{ i.phone }}" style="color: #951A23;"><i class="far fa-comment-alt fa-2x"></i></a></li>
+                                <li class="uk-margin-small-right"><a href="tel:{{ i.phone }}" style="color: #951A23;" class="uk-icon" uk-icon="icon:phone;ratio: 2"></a></li>
+                                <li class="uk-margin-small-right"><a href="sms:{{ i.phone }}" style="color: #951A23;" class="uk-icon" uk-icon="icon:comment;ratio: 2"></a></li>
                                 
                             </ul>
                         </div>

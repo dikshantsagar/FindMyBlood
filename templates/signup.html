@@ -30,25 +30,25 @@
                     <div class="uk-margin">
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="icon: user"></span>
-                            <input class="uk-input uk-text-center uk-form-width-large round" type="email" name="email" placeholder="Email">
+                            <input class="uk-input uk-text-center uk-form-width-large round" type="email" name="email" placeholder="Email" required>
                         </div>
                     </div>
                     <div class="uk-margin">
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                            <input class="uk-input uk-text-center uk-form-width-large round" type="password" name="password" placeholder="Password"/>
+                            <input class="uk-input uk-text-center uk-form-width-large round" type="password" name="password" placeholder="Password"/ required>
                         </div>
                     </div>
                     <div class="uk-margin">
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="icon: user"></span>
-                            <input class="uk-input uk-text-center uk-form-width-large round" type="text" name="name" placeholder="Name"/>
+                            <input class="uk-input uk-text-center uk-form-width-large round" type="text" name="name" placeholder="Name"/ required>
                         </div>
                     </div>
                     <div class="uk-margin">
                         <div class="uk-inline">
                             <span class="uk-form-icon" uk-icon="icon: phone"></span>
-                            <input class="uk-input uk-text-center uk-form-width-large round" type="tel" name="phone" placeholder="(XXX)-XXX-XXXX"/>
+                            <input class="uk-input uk-text-center uk-form-width-large round" type="tel" name="phone" placeholder="(XXX)-XXX-XXXX"/ required>
                         </div>
                     </div>
                     
@@ -57,22 +57,22 @@
 
                     
                     <div>
-                        <select class="uk-select uk-width-2-5 round" name="gender">
-                            <option disabled selected hidden> Gender</option>
+                        <select class="uk-select uk-width-2-5 round" name="gender" required>
+                            <option disabled selected hidden value=""> Gender</option>
                             <option>Male</option>
                             <option>Female</option>
                             <option>Other</option>
                         </select>
-                        <select class="uk-select uk-width-1-6 round" name="age">
-                            <option disabled selected hidden> Age</option>
+                        <select class="uk-select uk-width-1-6 round" name="age" required>
+                            <option disabled selected hidden value=""> Age</option>
                             {% for i in n %}
                             <option>{{i}}</option>
                             {% endfor %}
                             
                         </select>
                         
-                        <select class="uk-select uk-width-2-5 round" name="group">
-                            <option disabled selected hidden> Blood Group</option>
+                        <select class="uk-select uk-width-2-5 round" name="group" required>
+                            <option disabled selected hidden value=""> Blood Group</option>
                             <option>A+</option>
                             <option>A-</option>
                             <option>B+</option>
@@ -105,25 +105,25 @@
                             <div class="uk-margin">
                                 <div class="uk-inline">
                                     <span class="uk-form-icon" uk-icon="icon: user"></span>
-                                    <input class="uk-input uk-text-center uk-form-width-large round" type="email" name="email" placeholder="Email">
+                                    <input class="uk-input uk-text-center uk-form-width-large round" type="email" name="email" placeholder="Email" required>
                                 </div>
                             </div>
                             <div class="uk-margin">
                                 <div class="uk-inline">
                                     <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                                    <input class="uk-input uk-text-center uk-form-width-large round" type="password" name="password" placeholder="Password"/>
+                                    <input class="uk-input uk-text-center uk-form-width-large round" type="password" name="password" placeholder="Password"/ required>
                                 </div>
                             </div>
                             <div class="uk-margin">
                                 <div class="uk-inline">
                                     <span class="uk-form-icon" uk-icon="icon: user"></span>
-                                    <input class="uk-input uk-text-center uk-form-width-large round" type="text" name="name" placeholder="Name"/>
+                                    <input class="uk-input uk-text-center uk-form-width-large round" type="text" name="name" placeholder="Name"/ required>
                                 </div>
                             </div>
                             <div class="uk-margin">
                                 <div class="uk-inline">
                                     <span class="uk-form-icon" uk-icon="icon: phone"></span>
-                                    <input class="uk-input uk-text-center uk-form-width-large round" type="tel" name="phone" placeholder="(XXX)-XXX-XXXX"/>
+                                    <input class="uk-input uk-text-center uk-form-width-large round" type="tel" name="phone" placeholder="(XXX)-XXX-XXXX"/ required>
                                 </div>
                             </div>
 
@@ -133,22 +133,22 @@
 
                             
                             <div>
-                                <select class="uk-select uk-width-2-5 round" name="gender">
-                                    <option disabled selected hidden> Gender</option>
+                                <select class="uk-select uk-width-2-5 round" name="gender" required>
+                                    <option disabled selected hidden value=""> Gender</option>
                                     <option>Male</option>
                                     <option>Female</option>
                                     <option>Other</option>
                                 </select>
-                                <select class="uk-select uk-width-1-6 round" name="age">
-                                    <option disabled selected hidden> Age</option>
+                                <select class="uk-select uk-width-1-6 round" name="age" required>
+                                    <option disabled selected hidden value=""> Age</option>
                                     {% for i in n %}
                                     <option>{{i}}</option>
                                     {% endfor %}
                                     
                                 </select>
                                 
-                                <select class="uk-select uk-width-2-5 round" name="group">
-                                    <option disabled selected hidden> Blood Group</option>
+                                <select class="uk-select uk-width-2-5 round" name="group" required>
+                                    <option disabled selected hidden value=""> Blood Group</option>
                                     <option>A+</option>
                                     <option>A-</option>
                                     <option>B+</option>
@@ -174,7 +174,7 @@
                                         </td>
                                         <td>
                                             <span class="uk-align-right">
-                                                <label><input class="uk-radio" type="radio" name="radio1" value="1">Yes</label>
+                                                <label><input class="uk-radio" type="radio" name="radio1" value="1" required>Yes</label>
 
                                                 <label><input class="uk-radio" type="radio" name="radio1" value="0">No</label>
                                             </span>
@@ -186,7 +186,7 @@
                                         </td>
                                         <td>
                                             <span class="uk-align-right">
-                                                <label><input class="uk-radio" type="radio" name="radio2" value="1" >Yes</label>
+                                                <label><input class="uk-radio" type="radio" name="radio2" value="1" required>Yes</label>
                                                 <label><input class="uk-radio" type="radio" name="radio2" value="0">No</label>
                                             </span>
                                         </td>
@@ -197,7 +197,7 @@
                                         </td>
                                         <td>
                                             <span class="uk-align-right">
-                                                <label><input class="uk-radio" type="radio" name="radio3"value="1" >Yes</label>
+                                                <label><input class="uk-radio" type="radio" name="radio3"value="1" required>Yes</label>
                                                 <label><input class="uk-radio" type="radio" name="radio3" value="0">No</label>
                                             </span>
                                         </td>
@@ -208,7 +208,7 @@
                                         </td>
                                         <td>
                                             <span class="uk-align-right">
-                                                <label><input class="uk-radio" type="radio" name="radio4" value="1" >Yes</label>
+                                                <label><input class="uk-radio" type="radio" name="radio4" value="1"required >Yes</label>
                                                 <label><input class="uk-radio" type="radio" name="radio4" value="0">No</label>
                                             </span>
                                         </td>
