@@ -17,6 +17,13 @@
           });
 
 
+      
+        setTimeout(function() {
+            $('#main').attr("hidden",false);
+            $('#loader').attr("hidden",true); // Do something after 5 seconds
+       }, 500);
+
+
     
 
   

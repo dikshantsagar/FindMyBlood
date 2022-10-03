@@ -17,26 +17,54 @@
     <title>Home:Find My Blood</title>
 </head>
 <body>
-    
+    <a  class="uk-position-top-right uk-position-medium" href="/" uk-icon="icon: sign-out; ratio:2" style="fill:white;"></a>
 
-    <div class="uk-card uk-card-default uk-card-body uk-width-5-6@m uk-align-center uk-text-center  round">
-        <h3 class="uk-card-title">Find My Blood <i class="fas fa-tint" style="color: #951A23;"></i></h3><br>
+    <div class="uk-card uk-card-default uk-card-body uk-width-5-6@m uk-align-center uk-text-center  round uk-margin-remove-top">
+        <h2 class="uk-text-left">Find My Blood <i class="fas fa-tint" style="color: #951A23;"></i></h2><br>
         <div class="uk-grid uk-margin-left">
             <div class="uk-card uk-card-default uk-width-2-5 uk-padding">
-               
-                <img src="static/images/profile.png" class="profilepic">
+                <a class="uk-position-top-right uk-position-medium" uk-icon="icon: pencil; ratio:1.5" href="#editmodal" uk-toggle></a>
+                <div id="editmodal" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body round">
+                        <button class="uk-modal-close-default" type="button" uk-close></button>
+                        <h2 class="uk-modal-title">Edit Details</h2>
+                        
+                    </div>
+                </div>
                 
+                    <img src="static/images/profile.png" class="profilepic">
+                    
+                <br><br>
                 <div>
-                    <br>
-                    <h3>User Name</h3>
-                    <p class="uk-margin-remove">Email</p>
-                    <p class="uk-margin-remove-top"><span>Gender</span> | <span>Age</span> | <span>Blood Group</span></p>
+                    <h3>{{name}}</h3>
+                    <p class="uk-margin-remove">{{email}}</p>
+                    <p class="uk-margin-remove">{{phone}}</p>
+                    <p class="uk-margin-remove-top"><span class="uk-badge round">{{gender}}</span> | <span class="uk-badge round">{{age}}</span> | <span class="uk-badge round">{{group}}</span></p>
                     
                     
                 </div>
             </div>
+            
             <div class="uk-card uk-card-default uk-width-expand uk-padding uk-margin-left">
-                <button class="uk-button uk-button-primary uk-button-large round">Find a Donor</button>
+                <h3 class="uk-text-left">History</h3>
+                <div class="uk-height-small" style="overflow:scroll;">
+                    <ul class="uk-list uk-list-divider uk-text-left">
+                        <li>History User 1</li>
+                        <li>History User 2</li>
+                        <li>History User 1</li>
+                        <li>History User 2</li>
+                        <li>History User 1</li>
+                        <li>History User 2</li>
+                        <li>History User 1</li>
+                        <li>History User 2</li>
+                        
+                    </ul>
+                </div>
+                <br><br>
+                <form action="/donorlist" method="post">
+                    <button class="uk-button uk-button-primary uk-button-large round">Find a Donor</button>
+                </form>
+                
             </div>
 
         </div>

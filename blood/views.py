@@ -1,5 +1,4 @@
-from inspect import indentsize
-from uuid import RFC_4122
+
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -9,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 
-import math
+from .utils import distance
 
 import matplotlib.pyplot as plt
 
@@ -21,17 +20,23 @@ from firebase_admin import db
 cred = credentials.Certificate("static/data/blood-ed205-firebase-adminsdk-eqmtk-2bffc253fb.json")
 
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://blood-ed205-default-rtdb.firebaseio.com'
+    'databaseURL': 'https://blood-ed205-default-rtdb.firebaseio.com',
+    'storageBucket': 'blood-ed205.appspot.com'
 })
+
+def loader(request):
+    return render(request,'loader.html')
+
+
 def index(request):
     
 
-    ref = db.reference('/users/')
-    users = ref.get()
-    print(users)
-    #print(type(ref.get()))
-    # ref.update({'user2':{'bloodgroup': 'A+', 'location': '(230,430)', 'name': 'kumar', 'password': 'pass123'}})
-    ref.set({'user1':{'bloodgroup': 'A+', 'location': '(230,430)', 'email': 'rahul@gmail.com', 'password': 'pass123'}})
+    # ref = db.reference('/users/')
+    # users = ref.get()
+    # print(users)
+    # #print(type(ref.get()))
+    # # ref.update({'user2':{'bloodgroup': 'A+', 'location': '(230,430)', 'name': 'kumar', 'password': 'pass123'}})
+    # ref.update({'user1':{'bloodgroup': 'A+', 'location': '(230,430)', 'email': 'rahul@gmail.com', 'password': 'pass123'}})
     
     return render(request,'index.html')
 
@@ -64,8 +69,10 @@ def signupworker(request):
         longi = request.POST.get('long')
         group = request.POST.get('group')
         phone = request.POST.get('phone')
+        gender = request.POST.get('gender')
+        age = request.POST.get('age')
 
-        dic = {'bloodgroup' : group, 'location':'('+lat+','+longi+')', 'name':name, 'email':email, 'password':password, 'phone':phone}
+        dic = {'bloodgroup' : group, 'location':'('+lat+','+longi+')', 'name':name, 'email':email, 'password':password, 'phone':phone, 'gender':gender,'age':age}
         
         if request.POST.get('radio1'):
             r1 = request.POST.get('radio1')
@@ -74,6 +81,7 @@ def signupworker(request):
             r4 = request.POST.get('radio4')
 
             if(r1=='1' and r2=='0' and r3=='0' and r4=='0'):
+                dic['lastdonated'] = 'NA'
                 ref = db.reference('/donors/')
                 userind = int(list(sorted(list(ref.get()))[-1])[-1]) + 1
                 ref.update({'donor'+str(userind): dic})
@@ -110,23 +118,49 @@ def signin(request):
         ref = db.reference('/users/')
         users = ref.get()
         print(users)
+        print("######",email,password)
 
         for i in users:
             if(users[i]['email'] == email and users[i]['password'] == password):
-                return redirect('/home')
-            else:
-                return render(request,'index.html',{'error':1})
+                return home(request,users[i])
+                #return redirect('home',users[i])
+        
+        return render(request,'index.html',{'error':1})
         
 
 
 
 
-
+@csrf_exempt
 def donorlist(request):
 
-    return render(request,'donorlist.html')
+    print("session user")
+    print(request.session['user'])
+    uloc = np.array(list(map(float, request.session['user']['location'].strip('()').split(','))))
+    ref = db.reference('/donors/')
+    donors = ref.get()
+    dist = []
+    for i in donors:
+        dloc = np.array(list(map(float, donors[i]['location'].strip('()').split(','))))
+        dist.append(distance(uloc[0],dloc[0],uloc[1],dloc[1]))
+    
+    
+    donordist = zip(dist,[donors[i] for i in donors])
+    donordist = sorted(donordist, key=lambda x: x[0])
+    print(donordist)
+    
+
+    return render(request,'donorlist.html',{'donorlist':donordist})
 
 
-def home(request):
+def home(request,user):
+    email = user['email']
+    name = user['name']
+    group = user['bloodgroup']
+    phone = user['phone']
+    gender = user['gender']
+    age = user['age']
 
-    return render(request,'home.html')
+    request.session['user'] = user
+
+    return render(request,'home.html',{'email':email,'name':name,'group':group,'phone':phone, 'gender':gender,'age':age})

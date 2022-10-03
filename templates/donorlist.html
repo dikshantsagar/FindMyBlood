@@ -19,114 +19,50 @@
 <body>
     
 
-    <div class="uk-card uk-card-default uk-card-body uk-width-5-6@m uk-align-center uk-text-center  round">
-        <h3 class="uk-card-title">Find My Blood <i class="fas fa-tint" style="color: #951A23;"></i></h3><br>
+    <div class="uk-card uk-card-default uk-card-body uk-width-5-6@m uk-align-center uk-text-center round" style="overflow: scroll; max-height: 70vh;">
+        <h2 class="uk-text-left">Find My Blood <i class="fas fa-tint" style="color: #951A23;"></i></h2><br>
         <ul class="uk-list">
+            {% for dist, i in donorlist%}
             <li>
-                <div class="uk-card uk-card-default uk-card-body uk-width-1-1@m uk-text-left round" style="padding:10px;">
+                <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-width-1-1@m uk-text-left round" style="padding:10px;">
                     <div class="uk-grid-small" uk-grid>
                         <div class="uk-width-1-6">
                             <img src="static/images/profile.png" class="profilepic">
                         </div>
-                        <div class="uk-width-expand">
-                            <h3>Rahul</h3>
+                        <div class="uk-width-expand uk-padding">
+                            <h3>{{ i.name }}</h3>
                             <div class=" uk-grid-small" uk-grid>
                                 <div>
-                                    <b>Age :</b>25
+                                    <b style="color: #951A23;">Age :</b> {{ i.age }}
                                 </div>
                                 <div>
-                                    <b>Gender :</b>Male
+                                    <b><i class="fas fa-venus-mars" style="color: #951A23;"></i> :</b> {{ i.gender }}
                                 </div>
                                 <div>
-                                    <b>Blood Group :</b> B+
+                                    <b><i class="fas fa-tint" style="color: #951A23;"></i> :</b> {{ i.bloodgroup }}
                                 </div>
                                 <div>
-                                    <b>Last Donated :</b>30 August 2022
+                                    <b style="color: #951A23;">Last Donated :</b> {{ i.lastdonated }}
                                 </div>
                                 <div>
-                                    <b>Distance :</b>1.1Km
+                                    <b><i class="fas fa-location-arrow" style="color: #951A23;"></i> :</b> {{ dist }} Km
                                 </div>
                             </div>
                         </div>
                         <div class="uk-text-align-right uk-width-1-6">
                             <ul class="uk-iconnav uk-position-center uk-position-relative">
-                                <li><a href="#" uk-icon="icon: phone; ratio: 2" style="color: #951A23;"></a></li>
-                                <li><a href="#" uk-icon="icon: whatsapp; ratio: 2" style="color: #951A23;"></a></li>
+                                
+                                <li class="uk-margin-small-right"><a href="tel:{{ i.phone }}" style="color: #951A23;"><i class="fas fa-mobile-alt fa-2x"></i></a></li>
+                                <li class="uk-margin-small-right"><a href="sms:{{ i.phone }}" style="color: #951A23;"><i class="far fa-comment-alt fa-2x"></i></a></li>
+                                
                             </ul>
                         </div>
                     </div> 
                 </div>
             </li>
-            <li>
-                <div class="uk-card uk-card-default uk-card-body uk-width-1-1@m uk-text-left round" style="padding:10px;">
-                    <div class="uk-grid-small" uk-grid>
-                        <div class="uk-width-1-6">
-                            <img src="static/images/profile.png" class="profilepic">
-                        </div>
-                        <div class="uk-width-expand">
-                            <h3>Rahul</h3>
-                            <div class=" uk-grid-small" uk-grid>
-                                <div>
-                                    <b>Age :</b>25
-                                </div>
-                                <div>
-                                    <b>Gender :</b>Male
-                                </div>
-                                <div>
-                                    <b>Blood Group :</b> B+
-                                </div>
-                                <div>
-                                    <b>Last Donated :</b>30 August 2022
-                                </div>
-                                <div>
-                                    <b>Distance :</b>1.1Km
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uk-text-align-right uk-width-1-6">
-                            <ul class="uk-iconnav uk-position-center uk-position-relative">
-                                <li><a href="#" uk-icon="icon: phone; ratio: 2" style="color: #951A23;"></a></li>
-                                <li><a href="#" uk-icon="icon: whatsapp; ratio: 2" style="color: #951A23;"></a></li>
-                            </ul>
-                        </div>
-                    </div> 
-                </div>
-            </li>
-            <li>
-                <div class="uk-card uk-card-default uk-card-body uk-width-1-1@m uk-text-left round" style="padding:10px;">
-                    <div class="uk-grid-small" uk-grid>
-                        <div class="uk-width-1-6">
-                            <img src="static/images/profile.png" class="profilepic">
-                        </div>
-                        <div class="uk-width-expand">
-                            <h3>Rahul</h3>
-                            <div class=" uk-grid-small" uk-grid>
-                                <div>
-                                    <b>Age :</b>25
-                                </div>
-                                <div>
-                                    <b>Gender :</b>Male
-                                </div>
-                                <div>
-                                    <b>Blood Group :</b> B+
-                                </div>
-                                <div>
-                                    <b>Last Donated :</b>30 August 2022
-                                </div>
-                                <div>
-                                    <b>Distance :</b>1.1Km
-                                </div>
-                            </div>
-                        </div>
-                        <div class="uk-text-align-right uk-width-1-6">
-                            <ul class="uk-iconnav uk-position-center uk-position-relative">
-                                <li><a href="#" uk-icon="icon: phone; ratio: 2" style="color: #951A23;"></a></li>
-                                <li><a href="#" uk-icon="icon: whatsapp; ratio: 2" style="color: #951A23;"></a></li>
-                            </ul>
-                        </div>
-                    </div> 
-                </div>
-            </li>
+            {% endfor %}
+            
+            
         </ul>
         
 

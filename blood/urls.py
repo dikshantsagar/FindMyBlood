@@ -24,6 +24,8 @@ urlpatterns = [
     path('signupworker', views.signupworker, name='signupworker'),
     path('donorlist', views.donorlist, name='donorlist'),
     path('signin',views.signin, name='signin'),
-    path('home',views.home, name='home')
+    path('home',views.home, name='home'),
+    path('loader',views.loader, name='loader')
+
 
 ]
