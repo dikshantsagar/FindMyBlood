@@ -62,9 +62,33 @@
                     </ul>
                 </div>
                 <br><br>
-                <form action="/donorlist" method="post">
-                    <button class="uk-button uk-button-primary uk-button-large round">Find a Donor</button>
+                
+                <button class="uk-button uk-button-primary uk-button-large round" uk-toggle="target: #findDonerModal">Find a Donor</button>
+                
                 </form>
+                <div id="findDonerModal" uk-modal>
+                    <div class="uk-modal-dialog uk-modal-body uk-margin-large-top">
+                        <button class="uk-modal-close-default" type="button" uk-close></button>
+                        <h2 class="uk-modal-title">Select Blood Group</h2>
+                        <div class="uk-modal-body ">
+                            <form action="/donorlist" method="post">
+                                <select class="uk-select round uk-form-width-medium" name="group" required>
+                                    <option disabled selected hidden value=""> Blood Group</option>
+                                    <option>A+</option>
+                                    <option>A-</option>
+                                    <option>B+</option>
+                                    <option>B-</option>
+                                    <option>O+</option>
+                                    <option>O-</option>
+                                    <option>AB+</option>
+                                    <option>AB-</option>
+                                </select>
+                                <button type="submit" class="uk-button uk-button-primary uk-button-medium round"><span uk-icon="arrow-right"></span></button>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
                 
             </div>
 

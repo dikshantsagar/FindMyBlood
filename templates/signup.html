@@ -98,9 +98,9 @@
         <h2 class="uk-text-left">Find My Blood <i class="fas fa-tint" style="color: #951A23;"></i></h2>
         
             
-                <form action="/signupworker" method="POST" onsubmit="validateForm();">
-                    <div class="uk-grid">
-                        <div class="uk-width-2-5 uk-padding">
+                <form  action="/signupworker" method="POST" onsubmit="validateForm();">
+                    
+                        <div class="uk-padding"  class = "uk-text-center" id="info">
                             
                             <div class="uk-margin">
                                 <div class="uk-inline">
@@ -133,13 +133,13 @@
 
                             
                             <div>
-                                <select class="uk-select uk-width-2-5 round" name="gender" required>
+                                <select class="uk-select round uk-form-width-small" name="gender" required>
                                     <option disabled selected hidden value=""> Gender</option>
                                     <option>Male</option>
                                     <option>Female</option>
                                     <option>Other</option>
                                 </select>
-                                <select class="uk-select uk-width-1-6 round" name="age" required>
+                                <select class="uk-select  round uk-form-width-small" name="age" required>
                                     <option disabled selected hidden value=""> Age</option>
                                     {% for i in n %}
                                     <option>{{i}}</option>
@@ -147,7 +147,7 @@
                                     
                                 </select>
                                 
-                                <select class="uk-select uk-width-2-5 round" name="group" required>
+                                <select class="uk-select round uk-form-width-medium" name="group" required>
                                     <option disabled selected hidden value=""> Blood Group</option>
                                     <option>A+</option>
                                     <option>A-</option>
@@ -161,8 +161,8 @@
                                 
                             </div>
                         </div>
-                        <hr class="uk-divider-vertical" style="height: 40vh; padding: 10px; border-left:5px solid #951A23;">
-                        <div class="uk-width-auto">
+                        
+                        <div class="" hidden id="ques">
                             <h3>Mandatory Questionaire</h3>
                             <br>
                             <table class="uk-table uk-text-left">
@@ -216,9 +216,11 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    
                     <br>
-                    <input class=" uk-button uk-button-primary uk-button-large round" type="submit" value="Sign Up"/>
+                    <button class="uk-button uk-button-primary uk-button-large round" id="nextButton"><span uk-icon="arrow-right"></span></button>
+                    <button class="uk-button uk-button-primary uk-button-large round" id="backButton" hidden><span uk-icon="arrow-left"></span></button>
+                    <input class=" uk-button uk-button-primary uk-button-large round" type="submit" value="Sign Up"/  id='submit' hidden>
 
                 </form>
 

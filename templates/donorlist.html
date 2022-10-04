@@ -66,6 +66,10 @@
                 </div>
             </li>
             {% endfor %}
+            {% if donorlist %}
+            {% else %}
+                <h4>No donors found for the selected blood group !</h4>
+            {% endif %}
             
             
         </ul>

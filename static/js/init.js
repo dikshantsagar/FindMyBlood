@@ -24,6 +24,22 @@
        }, 500);
 
 
+
+       $('#nextButton').click(function(){
+        $('#nextButton').attr("hidden",true);
+        $('#info').attr("hidden",true);
+        $('#ques').attr("hidden",false);
+        $('#backButton').attr("hidden",false);
+        $('#submit').attr("hidden",false);
+       });
+
+       $('#backButton').click(function(){
+        $('#nextButton').attr("hidden",false);
+        $('#info').attr("hidden",false);
+        $('#ques').attr("hidden",true);
+        $('#backButton').attr("hidden",true);
+        $('#submit').attr("hidden",true);
+       });
     
 
   
@@ -34,9 +50,7 @@
   })(jQuery); // end of jQuery name space
   
   
-function validateForm(){
-    
-  }
+
   
   
   

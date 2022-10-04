@@ -134,23 +134,29 @@ def signin(request):
 @csrf_exempt
 def donorlist(request):
 
-    print("session user")
-    print(request.session['user'])
-    uloc = np.array(list(map(float, request.session['user']['location'].strip('()').split(','))))
-    ref = db.reference('/donors/')
-    donors = ref.get()
-    dist = []
-    for i in donors:
-        dloc = np.array(list(map(float, donors[i]['location'].strip('()').split(','))))
-        dist.append(distance(uloc[0],dloc[0],uloc[1],dloc[1]))
-    
-    
-    donordist = zip(dist,[donors[i] for i in donors])
-    donordist = sorted(donordist, key=lambda x: x[0])
-    print(donordist)
-    
+    if request.method == 'POST':
+        group = request.POST.get('group')
+        print("session user")
+        print(request.session['user'])
+        uloc = np.array(list(map(float, request.session['user']['location'].strip('()').split(','))))
+        ref = db.reference('/donors/')
+        donors = ref.get()
+        dist = []
+        reqdoner = []
+        for i in donors:
+            if donors[i]['bloodgroup'] == group:
+                print('found')
+                dloc = np.array(list(map(float, donors[i]['location'].strip('()').split(','))))
+                dist.append(distance(uloc[0],dloc[0],uloc[1],dloc[1]))
+                reqdoner.append(donors[i])
+        
+        
+        donordist = zip(dist,reqdoner)
+        donordist = sorted(donordist, key=lambda x: x[0])
+        print(donordist)
+        
 
-    return render(request,'donorlist.html',{'donorlist':donordist})
+        return render(request,'donorlist.html',{'donorlist':donordist})
 
 
 def home(request,user):
