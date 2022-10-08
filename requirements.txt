@@ -3,3 +3,4 @@ Django
 firebase-admin
 numpy
 matplotlib
+whitenoise
