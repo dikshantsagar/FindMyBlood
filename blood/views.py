@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 import pickle
 import numpy as np
-
+import json
 import os
 
 from .utils import distance
