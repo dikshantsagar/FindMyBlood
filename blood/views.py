@@ -21,7 +21,7 @@ firebase_creds = os.environ['firebase_creds']
 # with open("firebase_credentials.json", "w") as write_file:
 #     json.dump(firebase_creds, write_file)
 
-cred = credentials.Certificate(JSON.parse(firebase_creds))
+cred = credentials.Certificate(json.loads(firebase_creds))
 
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://blood-ed205-default-rtdb.firebaseio.com',
