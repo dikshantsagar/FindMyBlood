@@ -4,3 +4,4 @@ firebase-admin
 numpy
 matplotlib
 whitenoise
+django_heroku
