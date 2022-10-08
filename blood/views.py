@@ -5,12 +5,12 @@ from django.views.decorators.csrf import csrf_exempt
 
 import pickle
 import numpy as np
-import pandas as pd
+
 import os
 
 from .utils import distance
 
-import matplotlib.pyplot as plt
+
 
 
 import firebase_admin
