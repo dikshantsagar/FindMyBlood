@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 import pickle
 import numpy as np
 import pandas as pd
-
+import os
 
 from .utils import distance
 
@@ -17,7 +17,11 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
-cred = credentials.Certificate("static/data/blood-ed205-firebase-adminsdk-eqmtk-cd30934137.json")
+firebase_creds = os.environ['firebase_creds']
+with open("firebase_credentials.json", "w") as write_file:
+    json.dump(firebase_creds, write_file)
+
+cred = credentials.Certificate("firebase_credentials.json")
 
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://blood-ed205-default-rtdb.firebaseio.com',
