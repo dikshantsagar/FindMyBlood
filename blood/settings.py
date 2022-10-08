@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '=*9ws-3ocvsj3i@&6_)bz0bl1&@7zn7-q@2%r3@ut@2nu9mvke'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','findmyblood.herokuapp.com']
 
