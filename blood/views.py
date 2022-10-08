@@ -71,9 +71,13 @@ def signupworker(request):
         phone = request.POST.get('phone')
         gender = request.POST.get('gender')
         age = request.POST.get('age')
+        utype = request.POST.get('type')
 
-        dic = {'bloodgroup' : group, 'location':'('+lat+','+longi+')', 'name':name, 'email':email, 'password':password, 'phone':phone, 'gender':gender,'age':age}
-        
+        dic = {'bloodgroup' : group, 'location':'('+lat+','+longi+')', 'name':name, 'email':email, 'password':password, 'phone':phone, 'gender':gender,'age':age,'type':utype}
+
+        ref = db.reference('/users/')
+        userind = int(list(sorted(list(ref.get()))[-1])[-1]) + 1
+
         if request.POST.get('radio1'):
             r1 = request.POST.get('radio1')
             r2 = request.POST.get('radio2')
@@ -82,15 +86,15 @@ def signupworker(request):
 
             if(r1=='1' and r2=='0' and r3=='0' and r4=='0'):
                 dic['lastdonated'] = 'NA'
-                ref = db.reference('/donors/')
-                userind = int(list(sorted(list(ref.get()))[-1])[-1]) + 1
-                ref.update({'donor'+str(userind): dic})
+                
+                
+                ref.update({'user'+str(userind): dic})
                 return render(request,'index.html',{'signuptoken': 1})
             else:
                 return render(request,'index.html',{'signupfailure': 1})
         else:
-            ref = db.reference('/users/')
-            userind = int(list(sorted(list(ref.get()))[-1])[-1]) + 1
+            
+            
             print(email, password, name, lat, longi, group)
             ref.update({'user'+str(userind): dic})
             #ref.update({str(email): dic})
@@ -117,8 +121,8 @@ def signin(request):
 
         ref = db.reference('/users/')
         users = ref.get()
-        print(users)
-        print("######",email,password)
+        # print(users)
+        # print("######",email,password)
 
         for i in users:
             if(users[i]['email'] == email and users[i]['password'] == password):
@@ -139,12 +143,12 @@ def donorlist(request):
         print("session user")
         print(request.session['user'])
         uloc = np.array(list(map(float, request.session['user']['location'].strip('()').split(','))))
-        ref = db.reference('/donors/')
+        ref = db.reference('/users/')
         donors = ref.get()
         dist = []
         reqdoner = []
         for i in donors:
-            if donors[i]['bloodgroup'] == group:
+            if donors[i]['bloodgroup'] == group and donors[i]['type']=='Donor':
                 print('found')
                 dloc = np.array(list(map(float, donors[i]['location'].strip('()').split(','))))
                 dist.append(distance(uloc[0],dloc[0],uloc[1],dloc[1]))
@@ -166,7 +170,8 @@ def home(request,user):
     phone = user['phone']
     gender = user['gender']
     age = user['age']
+    utype = user['type']
 
     request.session['user'] = user
 
-    return render(request,'home.html',{'email':email,'name':name,'group':group,'phone':phone, 'gender':gender,'age':age})
+    return render(request,'home.html',{'email':email,'name':name,'group':group,'phone':phone, 'gender':gender,'age':age,'type':utype})

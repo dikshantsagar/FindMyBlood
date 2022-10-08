@@ -24,7 +24,7 @@
         <div class="uk-grid uk-margin-left">
             <div class="uk-card uk-card-default uk-width-2-5@m uk-width-1-1@s uk-padding">
                 <a class="uk-position-top-right uk-position-medium" uk-icon="icon: pencil; ratio:1.5" href="#editmodal" uk-toggle></a>
-                <span class="uk-badge round uk-position-top-left uk-position-medium">Reciever</span>
+                <span class="uk-badge round uk-position-top-left uk-position-medium">{{ type }}</span>
                 <div id="editmodal" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body round">
                         <button class="uk-modal-close-default" type="button" uk-close></button>
@@ -47,6 +47,23 @@
             </div>
             
             <div class="uk-card uk-card-default uk-width-expand uk-padding uk-margin-left ">
+                {% if type == "Donor" %}
+                <h3 class="uk-text-left">Requests</h3>
+                <div class="uk-height-medium" style="overflow:scroll;">
+                    <ul class="uk-list uk-list-divider uk-text-left">
+                        <li>Requests User 1 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        <li>Requests User 2 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        <li>Requests User 1 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        <li>Requests User 2 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        <li>Requests User 1 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        <li>Requests User 2 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        <li>Requests User 1 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        <li>Requests User 2 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        
+                    </ul>
+                </div>
+                {%endif%}
+                {% if type == "Reciever" %}
                 <h3 class="uk-text-left">History</h3>
                 <div class="uk-height-small" style="overflow:scroll;">
                     <ul class="uk-list uk-list-divider uk-text-left">
@@ -64,6 +81,8 @@
                 <br><br>
                 
                 <button class="uk-button uk-button-primary uk-button-large round" uk-toggle="target: #findDonerModal">Find a Donor</button>
+                {%endif%}
+                
                 
                 </form>
                 <div id="findDonerModal" uk-modal>
