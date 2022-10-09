@@ -77,7 +77,7 @@ def signupworker(request):
 
         ref = db.reference('/users/')
         userind = int(list(sorted(list(ref.get()))[-1])[-1]) + 1
-
+        dic['id'] = userind
         if request.POST.get('radio1'):
             r1 = request.POST.get('radio1')
             r2 = request.POST.get('radio2')
@@ -86,6 +86,7 @@ def signupworker(request):
 
             if(r1=='1' and r2=='0' and r3=='0' and r4=='0'):
                 dic['lastdonated'] = 'NA'
+                dic['requests'] = {"request1":"something about request1"}
                 
                 
                 ref.update({'user'+str(userind): dic})
@@ -94,6 +95,7 @@ def signupworker(request):
                 return render(request,'index.html',{'signupfailure': 1})
         else:
             
+            dic['history'] = {"history1":"something"}
             
             print(email, password, name, lat, longi, group)
             ref.update({'user'+str(userind): dic})
@@ -102,14 +104,7 @@ def signupworker(request):
 
 
         
-
-        
-        
-        
-
-
-        
-        
+ 
         
 
 @csrf_exempt
@@ -153,8 +148,8 @@ def donorlist(request):
                 dloc = np.array(list(map(float, donors[i]['location'].strip('()').split(','))))
                 dist.append(distance(uloc[0],dloc[0],uloc[1],dloc[1]))
                 reqdoner.append(donors[i])
-        
-        
+
+
         donordist = zip(dist,reqdoner)
         donordist = sorted(donordist, key=lambda x: x[0])
         print(donordist)
@@ -164,14 +159,13 @@ def donorlist(request):
 
 
 def home(request,user):
-    email = user['email']
-    name = user['name']
-    group = user['bloodgroup']
-    phone = user['phone']
-    gender = user['gender']
-    age = user['age']
+    
     utype = user['type']
-
+    if utype=="Reciever":
+        history = [user['history'][i] for i in user['history']]
+    else:
+        history = [user['requests'][i] for i in user['requests']]
     request.session['user'] = user
+    print(history)
 
-    return render(request,'home.html',{'email':email,'name':name,'group':group,'phone':phone, 'gender':gender,'age':age,'type':utype})
+    return render(request,'home.html',{'user':user,'history':history})
