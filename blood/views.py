@@ -2,6 +2,7 @@
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime
 
 import pickle
 import numpy as np
@@ -155,7 +156,7 @@ def donorlist(request):
         print(donordist)
         
 
-        return render(request,'donorlist.html',{'donorlist':donordist})
+        return render(request,'donorlist.html',{'donorlist':donordist,'user':request.session['user']})
 
 
 def home(request,user):
@@ -169,3 +170,31 @@ def home(request,user):
     print(history)
 
     return render(request,'home.html',{'user':user,'history':history})
+
+
+@csrf_exempt
+def sendrequest(request):
+
+    if request.method == 'POST':
+
+        recid = request.POST.get('requesterid')
+        recname = request.POST.get('requestername')
+        donid = request.POST.get('donorid')
+        print(recid,donid)
+        date = datetime.today().strftime('%m/%d/%Y')
+
+        ref = db.reference('/users/user'+str(donid)+"/requests/")
+        dbref = ref.get()
+        exists = 0
+        for i in dbref:
+            print(dbref[i])
+            if dbref[i]['from'] == recname:
+                exists = 1
+        if exists == 0:
+            reqind = int(list(sorted(list(ref.get()))[-1])[-1]) + 1
+            dic = {'date':date,'from':recname,'recid':recid,'id':reqind}
+            ref.update({'request'+str(reqind): dic})
+        # print(ref.get(),histind)
+        
+
+    return HttpResponse()
