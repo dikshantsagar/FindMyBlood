@@ -18,6 +18,8 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
+from .models import Image
+
 cred = credentials.Certificate("static/data/blood-ed205-firebase-adminsdk-eqmtk-cd30934137.json")
 
 firebase_admin.initialize_app(cred, {
@@ -196,5 +198,15 @@ def sendrequest(request):
             ref.update({'request'+str(reqind): dic})
         # print(ref.get(),histind)
         
+
+    return HttpResponse()
+
+
+@csrf_exempt
+def upload(request):
+    if request.method == 'POST':
+        img = request.FILES
+        print(img)
+
 
     return HttpResponse()
