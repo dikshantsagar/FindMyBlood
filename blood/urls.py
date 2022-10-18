@@ -28,7 +28,7 @@ urlpatterns = [
     path('home',views.home, name='home'),
     path('loader',views.loader, name='loader'),
     path('sendrequest',views.sendrequest, name='sendrequest'),
-    path('firebase-messaging-sw.js', views.showFirebaseJS, name='show_firebase_js')
-
+    path('firebase-messaging-sw.js', views.showFirebaseJS, name='show_firebase_js'),
+    path('upload',views.upload, name='upload')
 
 ]

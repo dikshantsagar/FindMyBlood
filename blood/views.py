@@ -258,3 +258,13 @@ def sendrequest(request):
         
 
     return HttpResponse()
+
+
+@csrf_exempt
+def upload(request):
+    if request.method == 'POST':
+        img = request.FILES
+        print(img)
+
+
+    return HttpResponse()
