@@ -20,13 +20,15 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('send/' , views.sendPush),
     path('signup', views.signup, name='signup'),
     path('signupworker', views.signupworker, name='signupworker'),
     path('donorlist', views.donorlist, name='donorlist'),
     path('signin',views.signin, name='signin'),
     path('home',views.home, name='home'),
     path('loader',views.loader, name='loader'),
-    path('sendrequest',views.sendrequest, name='sendrequest')
+    path('sendrequest',views.sendrequest, name='sendrequest'),
+    path('firebase-messaging-sw.js', views.showFirebaseJS, name='show_firebase_js')
 
 
 ]
