@@ -24,17 +24,17 @@
     </form>
     
 
-    <div class="uk-card uk-card-default uk-card-body uk-width-5-6@m uk-align-center uk-text-center round" style="overflow: scroll; max-height: 70vh;">
+    <div class="uk-card uk-card-default uk-card-body uk-width-5-6@m uk-align-center uk-text-center round" >
         <h2 class="uk-text-left">Find My Blood <i class="fas fa-tint" style="color: #951A23;"></i></h2><br>
-        <ul class="uk-list">
+        <ul class="uk-list" style="overflow: scroll; max-height: 45vh;">
             {% for dist, i in donorlist%}
             <li>
                 <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-width-1-1@m uk-text-left round" style="padding:10px;">
                     <div class="uk-grid-small" uk-grid>
                         <div class="uk-width-1-6">
-                            <img src="static/images/profile.png" class="profilepic">
+                            <img src="static/images/profile.png" class="profilepic" height="100px" width="100px">
                         </div>
-                        <div class="uk-width-expand uk-padding">
+                        <div class="uk-width-expand ">
                             <h3>{{ i.name }}</h3>
                             <div class=" uk-grid-small" uk-grid>
                                 <div>
@@ -46,19 +46,29 @@
                                 <div>
                                     <b><i class="fas fa-tint" style="color: #951A23;"></i> :</b> {{ i.bloodgroup }}
                                 </div>
-                                <div>
+                                <!-- <div>
                                     <b style="color: #951A23;">Last Donated :</b> {{ i.lastdonated }}
-                                </div>
+                                </div> -->
                                 <div>
                                     <b><i class="fas fa-location-arrow" style="color: #951A23;"></i> :</b> {{ dist }} Km
                                 </div>
                             </div>
                         </div>
-                        <div class="uk-text-align-right uk-width-1-6">
-                            <ul class="uk-iconnav uk-position-center uk-position-relative">
+                        <div class="uk-text-align-right uk-width-1-5 uk-align-right">
+                            <ul class="uk-iconnav uk-position-center uk-position-relative ">
                                 
                                 <li class="uk-margin-small-right"><a href="tel:{{ i.phone }}" style="color: #951A23;" class="uk-icon" uk-icon="icon:phone;ratio: 2"></a></li>
                                 <li class="uk-margin-small-right"><a href="sms:{{ i.phone }}" style="color: #951A23;" class="uk-icon" uk-icon="icon:comment;ratio: 2"></a></li>
+                                <li class="uk-margin-small-right">
+                                    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+                                    <form id="sendrequest" method='post' action="sendrequest" target="dummyframe">
+                                        <input type="hidden" name="donorid" value="{{i.id}}">
+                                        <input type="hidden" name="requesterid" value="{{user.id}}">
+                                        <input type="hidden" name="requestername" value="{{user.name}}">
+                                        <a href="javascript:()" style="color: #951A23;" class="uk-icon" uk-icon="icon:forward;ratio: 2" onclick="this.closest('form').submit();"></a>
+                                    </form>
+                                    
+                                </li>
                                 
                             </ul>
                         </div>
