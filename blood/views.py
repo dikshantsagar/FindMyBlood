@@ -13,21 +13,25 @@ from .utils import distance
 
 import matplotlib.pyplot as plt
 
-
-import firebase_admin
-from firebase_admin import credentials, storage
-from firebase_admin import db
-
 import cv2
 import os.path
 
 
-cred = credentials.Certificate("static/data/blood-ed205-firebase-adminsdk-eqmtk-cd30934137.json")
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+
+firebase_creds = os.environ['firebase_creds']
+# with open("firebase_credentials.json", "w") as write_file:
+#     json.dump(firebase_creds, write_file)
+
+cred = credentials.Certificate(json.loads(firebase_creds))
 
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://blood-ed205-default-rtdb.firebaseio.com',
     'storageBucket': 'blood-ed205.appspot.com'
 })
+
 
 def loader(request):
     return render(request,'loader.html')
