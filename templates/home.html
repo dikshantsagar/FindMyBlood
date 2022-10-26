@@ -10,13 +10,14 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <link href="static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="static/css/site.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 
     <script src="static/js/uikit.min.js"></script>
     <script src="static/js/uikit-icons.min.js"></script>
     <title>Home:Find My Blood</title>
 </head>
 <body>
+    <input type="hidden" value="{{user.id}}" id="uid">
     <a  class="uk-position-top-right uk-position-medium" href="/" uk-icon="icon: sign-out; ratio:2" style="fill:white;"></a>
 
     <div class="uk-card uk-card-default uk-card-body uk-width-5-6  uk-align-center uk-text-center  round uk-margin-remove-top">
@@ -29,28 +30,34 @@
                     <div class="uk-modal-dialog uk-modal-body round">
                         <button class="uk-modal-close-default" type="button" uk-close></button>
                         <h2 class="uk-modal-title">Edit Details</h2>
-                        <form class="uk-text-center">
+                        <form class="uk-text-center" action="signin">
                             <div class="uk-inline">
-                                <img src="static/images/profile.png" class="profilepic" style="height:150px;width:150px;">
-                                <div class="uk-overlay uk-light uk-position-bottom uk-padding-remove js-upload" uk-form-custom  enctype='multipart/form-data'>
-                                    <input type="file" multiple name="profile">
+                                {% if pic %}
+                                    <img src="static/uploads/{{user.id}}.png" class="pic" style="height:150px;width:150px;border-radius: 100px;">
+                                {% else %}
+                                    <img src="static/images/profile.png" class="pic" style="height:150px;width:150px;">
+                                {% endif%}
+                                <div class="uk-overlay uk-light uk-position-bottom uk-padding-remove js-upload" uk-form-custom >
+                                    <input type="file" name="image" accept="image/*" id="id_image">
                                     <button class="uk-button uk-button-default uk-width-1-1 " style="border:0;"><span uk-icon="upload"></span></button>
                                 </div>
                                 <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
                             </div><br><br>
                             <div class="uk-inline" >
                                 <span class="uk-form-icon" uk-icon="icon: phone"></span>
-                                <input class="uk-input uk-text-center uk-form-width-large round" type="tel" name="phone" placeholder="(XXX)-XXX-XXXX"/ required>
+                                <input class="uk-input uk-text-center uk-form-width-large round" type="tel" name="phone" placeholder="(XXX)-XXX-XXXX"/>
                             </div><br><br>
-                            <input type="submit" class="uk-button uk-button-primary round">
+                            <button class="uk-button uk-button-primary round" onclick="window.location.reload();">Save</button>
                         </form>
                         
 
                     </div>
                 </div>
-                
-                    <img src="static/images/profile.png" class="profilepic" style="height:150px;width:150px;">
-                    
+                    {% if pic %}
+                        <img src="static/uploads/{{user.id}}.png" class="profilepic" style="height:150px;width:150px;border-radius: 100px;">
+                    {% else %}
+                        <img src="static/images/profile.png" class="profilepic" style="height:150px;width:150px;">
+                    {% endif%}
                 <br><br>
                 <div>
                     <h3>{{user.name}}</h3>

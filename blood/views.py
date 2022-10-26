@@ -15,10 +15,12 @@ import matplotlib.pyplot as plt
 
 
 import firebase_admin
-from firebase_admin import credentials
+from firebase_admin import credentials, storage
 from firebase_admin import db
 
-from .models import Image
+import cv2
+import os.path
+
 
 cred = credentials.Certificate("static/data/blood-ed205-firebase-adminsdk-eqmtk-cd30934137.json")
 
@@ -170,8 +172,14 @@ def home(request,user):
         history = [user['requests'][i] for i in user['requests']]
     request.session['user'] = user
     print(history)
+    #add image
 
-    return render(request,'home.html',{'user':user,'history':history})
+    if os.path.exists('static/uploads/'+str(request.session['user']['id'])+'.png'):
+        return render(request,'home.html',{'user':user,'history':history,'pic':1})
+    else:
+        return render(request,'home.html',{'user':user,'history':history})
+
+    
 
 
 @csrf_exempt
@@ -202,11 +210,24 @@ def sendrequest(request):
     return HttpResponse()
 
 
+
+@csrf_exempt
+def handle_uploaded_file(f):
+    
+    print(f)
+
+
 @csrf_exempt
 def upload(request):
+
+
     if request.method == 'POST':
-        img = request.FILES
-        print(img)
 
+        img = cv2.imdecode(np.fromstring(request.FILES['files[]'].read(), np.uint8), cv2.IMREAD_UNCHANGED)
+        cv2.imwrite('static/uploads/'+str(request.session['user']['id'])+'.png',img)
+       
+        
+        
+            
 
-    return HttpResponse()
+    return home(request,request.session['user'])

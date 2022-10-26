@@ -44,7 +44,9 @@
        UIkit.upload('.js-upload', {
 
         url: '/upload',
-        multiple: true,
+        mime: "image/*",
+        
+
 
         beforeSend: function (environment) {
             console.log('beforeSend', arguments);
@@ -90,10 +92,10 @@
 
         completeAll: function () {
             console.log('completeAll', arguments);
-
-            setTimeout(function () {
-                bar.setAttribute('hidden', 'hidden');
-            }, 1000);
+              var uid = $('#uid').val();
+              console.log('static/uploads/'+uid+'.png');
+            $('.pic').attr('src','static/uploads/'+uid+'.png');
+            
 
             alert('Upload Completed');
         }
