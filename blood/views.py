@@ -20,6 +20,7 @@ import os.path
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
+import json
 
 firebase_creds = os.environ['firebase_creds']
 # with open("firebase_credentials.json", "w") as write_file:
