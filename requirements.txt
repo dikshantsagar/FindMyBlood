@@ -5,3 +5,4 @@ numpy
 matplotlib
 whitenoise
 django_heroku
+opencv-python
