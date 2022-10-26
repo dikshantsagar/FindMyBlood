@@ -18,13 +18,12 @@ import firebase_admin
 from firebase_admin import credentials, storage
 from firebase_admin import db
 
-<<<<<<< HEAD
+
 import cv2
 import os.path
 
 
-=======
->>>>>>> 6f2dfae9675b4761fc6e62a5cfc0f06d8148784b
+
 cred = credentials.Certificate("static/data/blood-ed205-firebase-adminsdk-eqmtk-cd30934137.json")
 
 firebase_admin.initialize_app(cred, {
@@ -211,7 +210,6 @@ def sendrequest(request):
         
 
     return HttpResponse()
-<<<<<<< HEAD
 
 
 
@@ -235,5 +233,3 @@ def upload(request):
             
 
     return home(request,request.session['user'])
-=======
->>>>>>> 6f2dfae9675b4761fc6e62a5cfc0f06d8148784b

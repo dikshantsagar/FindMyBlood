@@ -41,7 +41,6 @@
         $('#submit').attr("hidden",true);
        });
        
-<<<<<<< HEAD
        UIkit.upload('.js-upload', {
 
         url: '/upload',
@@ -103,9 +102,6 @@
 
     });
 
-=======
-       
->>>>>>> 6f2dfae9675b4761fc6e62a5cfc0f06d8148784b
   
       
   
