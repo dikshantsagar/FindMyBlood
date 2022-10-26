@@ -24,64 +24,58 @@
         <div class="uk-grid uk-margin-left">
             <div class="uk-card uk-card-default uk-width-2-5@m uk-width-1-1@s uk-padding">
                 <a class="uk-position-top-right uk-position-medium" uk-icon="icon: pencil; ratio:1.5" href="#editmodal" uk-toggle></a>
-                <span class="uk-badge round uk-position-top-left uk-position-medium">{{ user.type }}</span>
+                <span class="uk-badge round uk-position-top-left uk-position-medium">{{ type }}</span>
                 <div id="editmodal" uk-modal>
                     <div class="uk-modal-dialog uk-modal-body round">
                         <button class="uk-modal-close-default" type="button" uk-close></button>
                         <h2 class="uk-modal-title">Edit Details</h2>
-                        <form class="uk-text-center">
-                            <div class="uk-inline">
-                                <img src="static/images/profile.png" class="profilepic" style="height:150px;width:150px;">
-                                <div class="uk-overlay uk-light uk-position-bottom uk-padding-remove js-upload" uk-form-custom  enctype='multipart/form-data'>
-                                    <input type="file" multiple name="profile">
-                                    <button class="uk-button uk-button-default uk-width-1-1 " style="border:0;"><span uk-icon="upload"></span></button>
-                                </div>
-                                <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
-                            </div><br><br>
-                            <div class="uk-inline" >
-                                <span class="uk-form-icon" uk-icon="icon: phone"></span>
-                                <input class="uk-input uk-text-center uk-form-width-large round" type="tel" name="phone" placeholder="(XXX)-XXX-XXXX"/ required>
-                            </div><br><br>
-                            <input type="submit" class="uk-button uk-button-primary round">
-                        </form>
-                        
 
                     </div>
                 </div>
                 
-                    <img src="static/images/profile.png" class="profilepic" style="height:150px;width:150px;">
+                    <img src="static/images/profile.png" class="profilepic">
                     
                 <br><br>
                 <div>
-                    <h3>{{user.name}}</h3>
-                    <p class="uk-margin-remove">{{user.email}}</p>
-                    <p class="uk-margin-remove">{{user.phone}}</p>
-                    <p class="uk-margin-remove-top"><span class="uk-badge round">{{user.gender}}</span> | <span class="uk-badge round">{{user.age}}</span> | <span class="uk-badge round">{{user.bloodgroup}}</span></p>
+                    <h3>{{name}}</h3>
+                    <p class="uk-margin-remove">{{email}}</p>
+                    <p class="uk-margin-remove">{{phone}}</p>
+                    <p class="uk-margin-remove-top"><span class="uk-badge round">{{gender}}</span> | <span class="uk-badge round">{{age}}</span> | <span class="uk-badge round">{{group}}</span></p>
                     
                     
                 </div>
             </div>
             
             <div class="uk-card uk-card-default uk-width-expand uk-padding uk-margin-left ">
-                {% if user.type == "Donor" %}
+                {% if type == "Donor" %}
                 <h3 class="uk-text-left">Requests</h3>
                 <div class="uk-height-medium" style="overflow:scroll;">
-                    <ul class="uk-list uk-list-divider uk-text-left uk-list-striped">
-                        {% for i in history %}
-                        <li>Blood requested from <b>{{ i.from }}</b> on <b>{{ i.date }}.</b> <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
-                        {% endfor %} 
-                        
+                    <ul class="uk-list uk-list-divider uk-text-left">
+                        <li>Requests User 1 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        <li>Requests User 2 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        <li>Requests User 1 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        <li>Requests User 2 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        <li>Requests User 1 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        <li>Requests User 2 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        <li>Requests User 1 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        <li>Requests User 2 <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
                         
                     </ul>
                 </div>
                 {%endif%}
-                {% if user.type == "Reciever" %}
+                {% if type == "Reciever" %}
                 <h3 class="uk-text-left">History</h3>
                 <div class="uk-height-small" style="overflow:scroll;">
-                    <ul class="uk-list uk-list-divider uk-text-left uk-list-striped">
-                        {% for i in history %}
-                        <li>Blood accepted from <b>{{ i.from }}</b> on <b>{{ i.date }}.</b> <a href="#"><span class="uk-align-right" uk-icon="info"></span></a></li>
-                        {% endfor %}  
+                    <ul class="uk-list uk-list-divider uk-text-left">
+                        <li>History User 1</li>
+                        <li>History User 2</li>
+                        <li>History User 1</li>
+                        <li>History User 2</li>
+                        <li>History User 1</li>
+                        <li>History User 2</li>
+                        <li>History User 1</li>
+                        <li>History User 2</li>
+                        
                     </ul>
                 </div>
                 <br><br>
@@ -92,7 +86,7 @@
                 
                 </form>
                 <div id="findDonerModal" uk-modal>
-                    <div class="uk-modal-dialog uk-modal-body uk-margin-large-top round">
+                    <div class="uk-modal-dialog uk-modal-body uk-margin-large-top">
                         <button class="uk-modal-close-default" type="button" uk-close></button>
                         <h2 class="uk-modal-title">Select Blood Group</h2>
                         <div class="uk-modal-body ">
