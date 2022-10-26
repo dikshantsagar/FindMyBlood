@@ -1,5 +1,4 @@
 
-from pprint import pprint
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -8,8 +7,6 @@ from datetime import datetime
 import pickle
 import numpy as np
 import pandas as pd
-import requests
-import json
 
 
 from .utils import distance
@@ -21,9 +18,7 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
-cred = credentials.Certificate("../config.json")
-with open('../push-config.json', 'r') as f:
-    pushCred = json.load(f)  
+cred = credentials.Certificate("static/data/blood-ed205-firebase-adminsdk-eqmtk-cd30934137.json")
 
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://blood-ed205-default-rtdb.firebaseio.com',
@@ -176,61 +171,6 @@ def home(request,user):
 
     return render(request,'home.html',{'user':user,'history':history})
 
-def showFirebaseJS(request):
-    data='importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js");' \
-         'importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js"); ' \
-         'var firebaseConfig = {' \
-         '        apiKey: "{pushCred["apiKey"]}",' \
-         '        authDomain: "{pushCred["authDomain"]}",' \
-         '        databaseURL: "{pushCred["databaseURL"]}",' \
-         '        projectId: "{pushCred["projectId"]}",' \
-         '        storageBucket: "{pushCred["storageBucket"]}",' \
-         '        messagingSenderId: "{pushCred["messagingSenderId"]}",' \
-         '        appId: "{pushCred["appId"]}",' \
-         '        measurementId: "{pushCred["measurementId"]}"' \
-         ' };' \
-         'firebase.initializeApp(firebaseConfig);' \
-         'const messaging=firebase.messaging();' \
-         'messaging.setBackgroundMessageHandler(function (payload) {' \
-         '    console.log(payload);' \
-         '    const notification=JSON.parse(payload);' \
-         '    const notificationOption={' \
-         '        body:notification.body,' \
-         '        icon:notification.icon' \
-         '    };' \
-         '    return self.registration.showNotification(payload.notification.title,notificationOption);' \
-         '});'
-
-    return HttpResponse(data,content_type="text/javascript")
-
-def sendPushNotification(registration_ids , message_title , message_desc):
-    # fcm_api : Can be found in firebase console > cloud messaging > Server key
-    fcm_api = "AAAAxy_qm84:APA91bGFhA8Vs2oZKgY8IWazGaf-T5AgtCG32o4miKPWPrcAh3bbIIKtPPvrM4RC9k0D6vrSRnGwAcwyvI7blwSgDX0ZMElGf4Y0ha3ulsDCPsg9-GAACAa6E1WC9DiEnIhh5USrOdFs"
-    url = "https://fcm.googleapis.com/fcm/send"
-    
-    headers = {
-    "Content-Type":"application/json",
-    "Authorization": 'key='+fcm_api}
-
-    payload = {
-        "registration_ids" :registration_ids,
-        "priority" : "high",
-        "notification" : {
-            "body" : message_desc,
-            "title" : message_title,
-            "icon": "static/images/blood-logo.PNG"
-            
-        }
-    }
-
-    result = requests.post(url,  data=json.dumps(payload), headers=headers )
-    print(result.json())
-
-def sendPush(request):
-    # registration : Fcm token of user whom you need to send the notificaiton 
-    resgistration  = ["cg2lA75aH1Okm7g-RaqtAl:APA91bGabNc3WemuriyzETm9f7Sy3A6GcW6GbzPlTfWHYTy4y1_bWMTnLQkZNFalL__3RN_gZdYoIZW3KjE2t-ZsC9mu82wYoXH8Eu33kichmOLbpHiOAP2dpTLc-totIolH3jjeQp2f"]
-    sendPushNotification(resgistration , 'You have received new blood request' , 'New Blood Request')
-    return HttpResponse("sent")
 
 @csrf_exempt
 def sendrequest(request):

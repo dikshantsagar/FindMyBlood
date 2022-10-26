@@ -12,64 +12,8 @@
     <link href="static/css/site.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
 
-    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-messaging.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"></script>
     <script src="static/js/uikit.min.js"></script>
     <script src="static/js/uikit-icons.min.js"></script>
-
-    <script>
-        //firebaseConfig: Can be found in firebase console > project settings
-        var firebaseConfig = {
-          apiKey: "AIzaSyDd-qHOt59RSvm69sh35mezJVGjsJ1F24c",
-          authDomain: "blood-ed205.firebaseapp.com",
-          databaseURL: "https://blood-ed205-default-rtdb.firebaseio.com",
-          projectId: "blood-ed205",
-          storageBucket: "blood-ed205.appspot.com",
-          messagingSenderId: "855502396366",
-          appId: "1:855502396366:web:805e45de37c01d928d299f",
-          measurementId: "G-JFKEMRMBZM"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
-      
-        const messaging = firebase.messaging();
-        console.log(messaging.getToken())
-        //vapidKey : Can be found in firebase console > project settings > cloud messaging > web push certificaes (key pair)
-        messaging.getToken({ vapidKey: 'BFPAwJKzSUleiU4XsCXOGncLfBw9TwadCLB28n4i-hhVU3CC6stOvDQEkoDOyx3SzAkm4f4iRbeL41fcuRK7YmM' }).then((currentToken) => {
-        if (currentToken) {
-          
-          console.log(currentToken)
-        } else {
-          console.log('No registration token available. Request permission to generate one.');
-       
-        }
-      }).catch((err) => {
-        console.log('An error occurred while retrieving token. ', err);
-      });
-      
-      
-        messaging
-         .requestPermission()
-         .then(function () {
-           console.log("Notification permission granted.");
-           return messaging.getToken()
-         })
-         .catch(function (err) {
-         console.log("Unable to get permission to notify.", err);
-       });
-      
-      
-        messaging.onMessage((payload) => {
-        console.log('Message received. ', payload);
-       
-      });
-      
-      
-      
-      </script>
-
     <title>Find My Blood</title>
 </head>
 <body>
