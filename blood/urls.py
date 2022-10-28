@@ -26,7 +26,8 @@ urlpatterns = [
     path('signin',views.signin, name='signin'),
     path('home',views.home, name='home'),
     path('loader',views.loader, name='loader'),
-    path('sendrequest',views.sendrequest, name='sendrequest')
+    path('sendrequest',views.sendrequest, name='sendrequest'),
+    path('upload',views.upload,name='upload')
 
 
 ]

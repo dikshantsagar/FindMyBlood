@@ -99,6 +99,10 @@
         <script>UIkit.notification("<span uk-icon='icon: close'></span> Not eligible to donate. Please try again after 3 months.");</script>
 
     {% endif %}
+    {% if emailalready %}
+        <script>UIkit.notification("<span uk-icon='icon: close'></span> Email already registered with another user.");</script>
+
+    {% endif %}
 
 
 

@@ -30,7 +30,7 @@
                     <div class="uk-modal-dialog uk-modal-body round">
                         <button class="uk-modal-close-default" type="button" uk-close></button>
                         <h2 class="uk-modal-title">Edit Details</h2>
-                        <form class="uk-text-center" action="signin">
+                        <form class="uk-text-center" action="signin" method="post" onsubmit="event.preventDefault();">
                             <div class="uk-inline">
                                 {% if pic %}
                                     <img src="static/uploads/{{user.id}}.png" class="pic" style="height:150px;width:150px;border-radius: 100px;">
@@ -43,10 +43,10 @@
                                 </div>
                                 <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
                             </div><br><br>
-                            <div class="uk-inline" >
+                            <!-- <div class="uk-inline" >
                                 <span class="uk-form-icon" uk-icon="icon: phone"></span>
-                                <input class="uk-input uk-text-center uk-form-width-large round" type="tel" name="phone" placeholder="(XXX)-XXX-XXXX"/>
-                            </div><br><br>
+                                <input class="uk-input uk-text-center uk-form-width-large round" type="tel" name="phone" placeholder="{{user.phone}}"/>
+                            </div><br><br> -->
                             <button class="uk-button uk-button-primary round" onclick="window.location.reload();">Save</button>
                         </form>
                         
@@ -75,7 +75,14 @@
                 <div class="uk-height-medium" style="overflow:scroll;">
                     <ul class="uk-list uk-list-divider uk-text-left uk-list-striped">
                         {% for i in history %}
-                        <li>Blood requested from <b>{{ i.from }}</b> on <b>{{ i.date }}.</b> <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button></li>
+                        <li>Blood requested from <b>{{ i.from }}</b> on <b>{{ i.date }}.</b>
+                        <form action="acceptrequest" method="post">
+                            <input type="hidden" name="reqid" value="{{ i.id }}">
+                            <input type="hidden" name="uid" value="{{ user.id }}">
+                            <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button>
+                        </form>
+                        
+                    </li>
                         {% endfor %} 
                         
                         

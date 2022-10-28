@@ -83,6 +83,12 @@ def signupworker(request):
         dic = {'bloodgroup' : group, 'location':'('+lat+','+longi+')', 'name':name, 'email':email, 'password':password, 'phone':phone, 'gender':gender,'age':age,'type':utype}
 
         ref = db.reference('/users/')
+        users = ref.get()
+        for i in users:
+            if(users[i]['email'] == email):
+                return render(request,'index.html',{'emailalready': 1})
+
+
         userind = int(list(sorted(list(ref.get()))[-1])[-1]) + 1
         dic['id'] = userind
         if request.POST.get('radio1'):
@@ -93,7 +99,7 @@ def signupworker(request):
 
             if(r1=='1' and r2=='0' and r3=='0' and r4=='0'):
                 dic['lastdonated'] = 'NA'
-                dic['requests'] = {"request1":"something about request1"}
+                dic['requests'] = {"request1":{'date':"1",'from':"1",'recid':"1",'id':"1","accepted":False}}
                 
                 
                 ref.update({'user'+str(userind): dic})
@@ -166,12 +172,15 @@ def donorlist(request):
 
 
 def home(request,user):
+
+    
+
     
     utype = user['type']
     if utype=="Reciever":
         history = [user['history'][i] for i in user['history']]
     else:
-        history = [user['requests'][i] for i in user['requests']]
+        history = [user['requests'][i] for i in user['requests']][1:]
     request.session['user'] = user
     print(history)
     #add image
@@ -180,6 +189,7 @@ def home(request,user):
         return render(request,'home.html',{'user':user,'history':history,'pic':1})
     else:
         return render(request,'home.html',{'user':user,'history':history})
+
 
     
 
@@ -200,11 +210,12 @@ def sendrequest(request):
         exists = 0
         for i in dbref:
             print(dbref[i])
+            
             if dbref[i]['from'] == recname:
                 exists = 1
         if exists == 0:
             reqind = int(list(sorted(list(ref.get()))[-1])[-1]) + 1
-            dic = {'date':date,'from':recname,'recid':recid,'id':reqind}
+            dic = {'date':date,'from':recname,'recid':recid,'id':reqind,'accepted':False}
             ref.update({'request'+str(reqind): dic})
         # print(ref.get(),histind)
         
