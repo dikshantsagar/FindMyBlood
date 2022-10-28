@@ -76,13 +76,17 @@
                     <ul class="uk-list uk-list-divider uk-text-left uk-list-striped">
                         {% for i in history %}
                         <li>Blood requested from <b>{{ i.from }}</b> on <b>{{ i.date }}.</b>
-                        <form action="acceptrequest" method="post">
+                        {% if i.accepted == "false" %}
+                        <form action="acceptrequest" method="post" style="display: inline;">
                             <input type="hidden" name="reqid" value="{{ i.id }}">
                             <input type="hidden" name="uid" value="{{ user.id }}">
                             <button class="uk-button uk-button-primary round uk-button-small uk-align-right">Accept</button>
                         </form>
-                        
-                    </li>
+                        {% endif %}
+                        {% if i.accepted == "true" %}
+                        <button class="uk-button uk-button-primary round uk-button-small uk-align-right" disabled>Accepted</button>
+                        {% endif %}
+                        </li>
                         {% endfor %} 
                         
                         

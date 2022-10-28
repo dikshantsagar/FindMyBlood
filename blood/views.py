@@ -182,7 +182,7 @@ def home(request,user):
     else:
         history = [user['requests'][i] for i in user['requests']][1:]
     request.session['user'] = user
-    print(history)
+    # print(history)
     #add image
 
     if os.path.exists('static/uploads/'+str(request.session['user']['id'])+'.png'):
@@ -209,7 +209,7 @@ def sendrequest(request):
         dbref = ref.get()
         exists = 0
         for i in dbref:
-            print(dbref[i])
+            # print(dbref[i])
             
             if dbref[i]['from'] == recname:
                 exists = 1
@@ -242,5 +242,26 @@ def upload(request):
         
         
             
+
+    return home(request,request.session['user'])
+
+
+@csrf_exempt
+def acceptrequest(request):
+
+    if request.method == 'POST':
+
+        reqid = request.POST.get('reqid')
+        uid = request.POST.get('uid')
+
+        
+        ref = db.reference('/users/user'+str(uid)+"/requests/")
+        dbref = ref.get()
+        
+        ref.child("request"+str(reqid)).update({"accepted":"true"})
+        
+        recid = dbref["request"+str(reqid)]['recid']
+        print(recid)
+        # ref = db.reference('/users/user'+str(recid)+"/history/")
 
     return home(request,request.session['user'])

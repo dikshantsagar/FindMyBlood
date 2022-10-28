@@ -27,7 +27,9 @@ urlpatterns = [
     path('home',views.home, name='home'),
     path('loader',views.loader, name='loader'),
     path('sendrequest',views.sendrequest, name='sendrequest'),
-    path('upload',views.upload,name='upload')
+    path('upload',views.upload,name='upload'),
+    path('acceptrequest',views.acceptrequest, name='acceptrequest')
+    
 
 
 ]
