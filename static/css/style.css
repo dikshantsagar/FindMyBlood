@@ -19,3 +19,21 @@ body{
     border-radius: 50px !important;
 }
 
+
+.datepicker{
+    padding: 0 7px;
+    background: #fff;
+    color: #666;
+    border:1px solid #e5e5e5;
+    transition: 0.2s ease-in-out;
+    transition-property: color, background-color, border;
+    font:inherit;
+    height: 40px;
+}
+
+.datepicker:focus{
+    outline: none;
+    background-color: #fff;
+    color: #666;
+    border-color: #951A23;
+}

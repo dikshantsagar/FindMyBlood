@@ -6,7 +6,7 @@ from datetime import datetime
 
 import pickle
 import numpy as np
-import pandas as pd
+from datetime import date
 
 
 from .utils import distance
@@ -30,6 +30,7 @@ firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://blood-ed205-default-rtdb.firebaseio.com',
     'storageBucket': 'blood-ed205.appspot.com'
 })
+
 
 def loader(request):
     return render(request,'loader.html')
@@ -77,10 +78,12 @@ def signupworker(request):
         group = request.POST.get('group')
         phone = request.POST.get('phone')
         gender = request.POST.get('gender')
-        age = request.POST.get('age')
+        DOB = request.POST.get('age')
         utype = request.POST.get('type')
+        
+        age = calculateAge(DOB)
 
-        dic = {'bloodgroup' : group, 'location':'('+lat+','+longi+')', 'name':name, 'email':email, 'password':password, 'phone':phone, 'gender':gender,'age':age,'type':utype}
+        dic = {'bloodgroup' : group, 'location':'('+lat+','+longi+')', 'name':name, 'email':email, 'password':password, 'phone':phone, 'gender':gender,'age':age,'type':utype,'DOB':DOB}
 
         ref = db.reference('/users/')
         users = ref.get()
@@ -293,3 +296,11 @@ def acceptrequest(request):
         request.session['user'] = refreshed_user
 
     return home(request,refreshed_user)
+
+def calculateAge(birthDate):
+    s = [int(i) for i in birthDate.split('-')]
+    birthDate = date(s[0],s[1],s[2])
+    today = date.today()
+    age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day))
+ 
+    return age
