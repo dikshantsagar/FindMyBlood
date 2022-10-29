@@ -64,6 +64,7 @@
                                     <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
                                     <form id="sendrequest" method='post' action="sendrequest" target="dummyframe">
                                         <input type="hidden" name="donorid" value="{{i.id}}">
+                                        <input type="hidden" name="donorname" value="{{i.name}}">
                                         <input type="hidden" name="requesterid" value="{{user.id}}">
                                         <input type="hidden" name="requestername" value="{{user.name}}">
                                         <a href="javascript:()" style="color: #951A23;" class="uk-icon" uk-icon="icon:forward;ratio: 2" onclick="this.closest('form').submit();document.forms[0].submit();"></a>

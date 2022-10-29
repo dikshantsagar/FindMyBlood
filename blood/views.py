@@ -99,7 +99,7 @@ def signupworker(request):
 
             if(r1=='1' and r2=='0' and r3=='0' and r4=='0'):
                 dic['lastdonated'] = 'NA'
-                dic['requests'] = {"request1":{'date':"1",'from':"1",'recid':"1",'id':"1","accepted":False}}
+                dic['requests'] = {"request1":{'date':"1",'from':"1",'recid':"1",'id':"1","accepted":"false"}}
                 
                 
                 ref.update({'user'+str(userind): dic})
@@ -108,7 +108,7 @@ def signupworker(request):
                 return render(request,'index.html',{'signupfailure': 1})
         else:
             
-            dic['history'] = {"history1":"something"}
+            dic['history'] = {"history1":{'date':"1",'from':"1",'donid':"1",'id':"1","accepted":"false"}}
             
             print(email, password, name, lat, longi, group)
             ref.update({'user'+str(userind): dic})
@@ -178,7 +178,7 @@ def home(request,user):
     
     utype = user['type']
     if utype=="Reciever":
-        history = [user['history'][i] for i in user['history']]
+        history = [user['history'][i] for i in user['history']][1:]
     else:
         history = [user['requests'][i] for i in user['requests']][1:]
     request.session['user'] = user
@@ -201,6 +201,7 @@ def sendrequest(request):
 
         recid = request.POST.get('requesterid')
         recname = request.POST.get('requestername')
+        donorname = request.POST.get('donorname')
         donid = request.POST.get('donorid')
         print(recid,donid)
         date = datetime.today().strftime('%m/%d/%Y')
@@ -215,10 +216,24 @@ def sendrequest(request):
                 exists = 1
         if exists == 0:
             reqind = int(list(sorted(list(ref.get()))[-1])[-1]) + 1
-            dic = {'date':date,'from':recname,'recid':recid,'id':reqind,'accepted':False}
+            dic = {'date':date,'from':recname,'recid':recid,'id':reqind,'accepted':"false"}
             ref.update({'request'+str(reqind): dic})
         # print(ref.get(),histind)
         
+
+        ref = db.reference('/users/user'+str(recid)+"/history/")
+        dbref = ref.get()
+        exists = 0
+
+        for i in dbref:
+            # print(dbref[i])
+            if dbref[i]['from'] == donorname:
+                exists = 1
+        if exists == 0:
+            histind = int(list(sorted(list(ref.get()))[-1])[-1]) + 1
+            dic = {'date':date,'from':donorname,'donid':donid,'id':histind,'accepted':"false"}
+            ref.update({'history'+str(histind): dic})
+
 
     return HttpResponse()
 
@@ -263,5 +278,18 @@ def acceptrequest(request):
         recid = dbref["request"+str(reqid)]['recid']
         print(recid)
         # ref = db.reference('/users/user'+str(recid)+"/history/")
+        ref = db.reference('/users/user'+str(recid)+"/history/")
+        dbref = ref.get()
+        
+        for i in dbref:
+            if(dbref[i]['from'] == request.session['user']['name'] ):
+                histid = dbref[i]['id']
+                ref.child("history"+str(histid)).update({"accepted":"true"})
 
-    return home(request,request.session['user'])
+
+        ref = db.reference('/users/')
+        users = ref.get()
+        refreshed_user = users['user'+uid]
+        request.session['user'] = refreshed_user
+
+    return home(request,refreshed_user)
