@@ -40,6 +40,13 @@
         $('#backButton').attr("hidden",true);
         $('#submit').attr("hidden",true);
        });
+
+       $('#pass, #pass2').on('keyup', function () {
+        if ($('#pass').val() == $('#pass2').val()) {
+          $('.message').css('color', 'green');
+        } else 
+          $('.message').css('color', 'red');
+      });
        
        UIkit.upload('.js-upload', {
 

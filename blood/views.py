@@ -22,6 +22,7 @@ from firebase_admin import db
 import cv2
 import os.path
 
+import math, random
 
 
 cred = credentials.Certificate("static/data/blood-ed205-firebase-adminsdk-eqmtk-cd30934137.json")
@@ -304,3 +305,16 @@ def calculateAge(birthDate):
     age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day))
  
     return age
+
+@csrf_exempt
+def forgot(request):
+    if request.method == 'POST':
+
+        digits = "0123456789"
+        OTP = ""
+        for i in range(4) :
+            OTP += digits[math.floor(random.random() * 10)]
+        
+        return render(request,'forgot.html',{'otp':OTP})
+    else:
+        return render(request,'forgot.html')
