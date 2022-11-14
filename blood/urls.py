@@ -29,7 +29,8 @@ urlpatterns = [
     path('sendrequest',views.sendrequest, name='sendrequest'),
     path('upload',views.upload,name='upload'),
     path('acceptrequest',views.acceptrequest, name='acceptrequest'),
-    path('forgotpassword',views.forgot, name='forgotpassword')
+    path('forgotpassword',views.forgot, name='forgotpassword'),
+    path('valforgot',views.valforgot, name='valforgot')
 
 
 ]

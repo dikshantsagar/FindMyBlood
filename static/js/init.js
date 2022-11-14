@@ -41,11 +41,31 @@
         $('#submit').attr("hidden",true);
        });
 
-       $('#pass, #pass2').on('keyup', function () {
-        if ($('#pass').val() == $('#pass2').val()) {
+       $("#otp").on('keyup',function (){
+
+        if($('#otp').val() == otp){
+            $('.message2').attr('uk-icon', 'check');
+            $('.message2').css('color', 'green');
+        }
+        else{
+            $('.message2').attr('uk-icon', 'close');
+            $('.message2').css('color', 'red');
+        }
+
+       });
+
+       $('#pass, #pass2, #otp').on('keyup', function () {
+        if ($('#pass').val() == $('#pass2').val() && $('#otp').val() == otp && $('#pass').val() != "") {
+            $('.message').attr('uk-icon', 'check');
           $('.message').css('color', 'green');
-        } else 
+          $('#chngpass').prop('disabled',false);
+          
+        } else {
+            $('.message').attr('uk-icon', 'close');
           $('.message').css('color', 'red');
+          $('#chngpass').prop('disabled',true);
+          
+        }
       });
        
        UIkit.upload('.js-upload', {

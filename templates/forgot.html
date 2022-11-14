@@ -31,11 +31,13 @@
 
             </form>
             {% endif %}
-            {% if otp %}
-                <form method="post" >
+            {% if otp and email %}
+                <form method="post" action="valforgot">
+                    <input type="hidden" value="{{email}}" name="email">
+                    <input class="uk-input uk-text-center uk-form-width-large round" type="text" name="otp" placeholder="OTP" id="otp" required> <span class='message2' uk-icon="check"></span>  <br><br>
                     <input class="uk-input uk-text-center uk-form-width-large round" type="password" name="pass" placeholder="Enter Password" id="pass" required> <span class='message' uk-icon="check"></span>  <br><br>
                     <input class="uk-input uk-text-center uk-form-width-large round" type="password" name="pass2" placeholder="Re-enter Password" id="pass2" required> <span class='message' uk-icon="check"></span> <br><br>
-                    <input class="uk-button uk-button-primary round" type="submit" value="Change Password">
+                    <input class="uk-button uk-button-primary round" type="submit" value="Change Password" id="chngpass">
 
                 </form>
             {% endif %}
@@ -46,7 +48,9 @@
         
     </div>
 
-
+    <script type="text/javascript">
+        var otp = "{{ otp }}";
+    </script>
 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="{% static "js/init.js" %}"></script>

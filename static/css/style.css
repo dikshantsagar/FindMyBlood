@@ -6,8 +6,8 @@
 body{
     background: url('/static/images/b.png');
     background-size: cover;
-    height: 80vh;
-    padding-top: 20vh;
+    height: 85vh;
+    padding-top: 15vh;
 }
 
 .profilepic{

@@ -86,6 +86,11 @@
 
     </div>
 
+    {% if passchange %}
+        <script>UIkit.notification("<span uk-icon='icon: check'></span> Password Chnaged Succesfully.");</script>
+
+    {% endif %}
+
     {% if signuptoken %}
         <script>UIkit.notification("<span uk-icon='icon: check'></span> Sign Up Succesful.");</script>
 

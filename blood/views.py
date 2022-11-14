@@ -1,4 +1,5 @@
 
+import smtplib
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -310,11 +311,40 @@ def calculateAge(birthDate):
 def forgot(request):
     if request.method == 'POST':
 
+        email = request.POST.get('email')
         digits = "0123456789"
         OTP = ""
         for i in range(4) :
             OTP += digits[math.floor(random.random() * 10)]
+        print(OTP)
+
+        # s = smtplib.SMTP('smtp.gmail.com', 587)
+        # s.starttls()
+        # emailpass = input()
+        # s.login("findmybloodcsula@gmail.com", emailpass )
+        # s.sendmail('&&&&&&&&&&&',email,"Your OTP for changing your password is : "+OTP)
         
-        return render(request,'forgot.html',{'otp':OTP})
+        return render(request,'forgot.html',{'otp':OTP,'email':email})
     else:
         return render(request,'forgot.html')
+
+
+@csrf_exempt
+def valforgot(request):
+
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        new_password = request.POST.get('pass')
+
+        ref = db.reference('/users/')
+        users = ref.get()
+        # print(users)
+        # print("######",email,password)
+
+        for i in users:
+            
+            if(users[i]['email'] == email):
+                ref.child(i).update({'password':new_password})
+
+
+    return render(request,'index.html',{'passchange': 1})
