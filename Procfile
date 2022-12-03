@@ -1,1 +1,1 @@
-web: gunicorn blood.wsgi
+web:gunicorn blood.wsgi
