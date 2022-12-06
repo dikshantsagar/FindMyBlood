@@ -5,15 +5,30 @@
 
 (function($){
     $(function(){
-  
+        
+        var lat = null;
+        var long = null;
         navigator.geolocation.getCurrentPosition((position) => {
-            let lat = position.coords.latitude;
-            let long = position.coords.longitude;
+            lat = position.coords.latitude;
+            long = position.coords.longitude;
             
             $('#lat').val(lat);
             $('#long').val(long);
             console.log(lat);
             console.log(long);
+          },(error)=> {
+            if (error.PERMISSION_DENIED) {
+                console.log("Error: permission denied");
+                // Your custom modal here.
+                
+                while(lat==null){
+                    alert('Geolocation is not enabled. Please enable to use this application and reopen in another tab.');
+                }
+                
+              } else {
+                // Handle other kinds of errors.
+                console.log("Other kind of error: " + error);
+              }
           });
 
 
@@ -21,7 +36,7 @@
         setTimeout(function() {
             $('#main').attr("hidden",false);
             $('#loader').attr("hidden",true); // Do something after 5 seconds
-       }, 500);
+       }, 200);
 
 
 

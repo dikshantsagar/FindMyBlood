@@ -179,8 +179,6 @@ def donorlist(request):
 def home(request,user):
 
     
-
-    
     utype = user['type']
     if utype=="Reciever":
         history = [user['history'][i] for i in user['history']][1:]
@@ -318,11 +316,14 @@ def forgot(request):
             OTP += digits[math.floor(random.random() * 10)]
         print(OTP)
 
-        # s = smtplib.SMTP('smtp.gmail.com', 587)
-        # s.starttls()
-        # emailpass = input()
-        # s.login("findmybloodcsula@gmail.com", emailpass )
-        # s.sendmail('&&&&&&&&&&&',email,"Your OTP for changing your password is : "+OTP)
+        s = smtplib.SMTP('smtp-mail.outlook.com', 587)
+        s.starttls()
+        emailpass = "Blood@123"
+        s.login("findmyblood@outlook.com", emailpass )
+        subject = "Forgot My Password"
+        body = "Your OTP for changing your password is : "+OTP
+        msg = f'Subject: {subject}\n\n{body}'
+        s.sendmail("findmyblood@outlook.com",email,msg=msg)
         
         return render(request,'forgot.html',{'otp':OTP,'email':email})
     else:

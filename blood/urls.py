@@ -32,5 +32,4 @@ urlpatterns = [
     path('forgotpassword',views.forgot, name='forgotpassword'),
     path('valforgot',views.valforgot, name='valforgot')
 
-
 ]
