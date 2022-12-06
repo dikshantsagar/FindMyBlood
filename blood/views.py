@@ -24,9 +24,15 @@ import cv2
 import os.path
 
 import math, random
+import json
 
+firebase_creds = os.environ['firebase_creds']
+fcm_creds = os.environ['fcm_creds']
+fcm_vapidKey = os.environ['fcm_vapidKey']
+fcm_token = os.environ['fcm_token']
 
 cred = credentials.Certificate("static/data/blood-ed205-firebase-adminsdk-eqmtk-cd30934137.json")
+pushCred = credentials.Certificate(json.loads(fcm_creds))
 
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://blood-ed205-default-rtdb.firebaseio.com',
@@ -48,7 +54,7 @@ def index(request):
     # # ref.update({'user2':{'bloodgroup': 'A+', 'location': '(230,430)', 'name': 'kumar', 'password': 'pass123'}})
     # ref.update({'user1':{'bloodgroup': 'A+', 'location': '(230,430)', 'email': 'rahul@gmail.com', 'password': 'pass123'}})
     
-    return render(request,'index.html')
+    return render(request,'index.html',{'pushCred':pushCred,'fcm_vapidKey':fcm_vapidKey,'fcm_token':fcm_token})
 
 
 @csrf_exempt
@@ -82,10 +88,11 @@ def signupworker(request):
         gender = request.POST.get('gender')
         DOB = request.POST.get('age')
         utype = request.POST.get('type')
+        pushToken  = request.POST.get('pushToken')
         
         age = calculateAge(DOB)
 
-        dic = {'bloodgroup' : group, 'location':'('+lat+','+longi+')', 'name':name, 'email':email, 'password':password, 'phone':phone, 'gender':gender,'age':age,'type':utype,'DOB':DOB}
+        dic = {'bloodgroup' : group, 'location':'('+lat+','+longi+')', 'name':name, 'email':email, 'password':password, 'phone':phone, 'gender':gender,'age':age,'type':utype,'DOB':DOB,'push-token':pushToken}
 
         ref = db.reference('/users/')
         users = ref.get()
@@ -131,6 +138,7 @@ def signin(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
+        pushToken = request.POST.get('pushToken')
 
         ref = db.reference('/users/')
         users = ref.get()
@@ -139,6 +147,7 @@ def signin(request):
 
         for i in users:
             if(users[i]['email'] == email and users[i]['password'] == password):
+                ref.child(i).update({'push-token':pushToken})
                 return home(request,users[i])
                 #return redirect('home',users[i])
         
@@ -193,7 +202,66 @@ def home(request,user):
     else:
         return render(request,'home.html',{'user':user,'history':history})
 
+def showFirebaseJS(request):
+    data='importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js");' \
+         'importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js"); ' \
+         'var firebaseConfig = {' \
+         '        apiKey: "{pushCred[`apiKey`]}",' \
+         '        authDomain: "{pushCred[`authDomain`]}",' \
+         '        databaseURL: "{pushCred[`databaseURL`]}",' \
+         '        projectId: "{pushCred[`projectId`]}",' \
+         '        storageBucket: "{pushCred[`storageBucket`]}",' \
+         '        messagingSenderId: "{pushCred[`messagingSenderId`]}",' \
+         '        appId: "{pushCred[`appId`]}",' \
+         '        measurementId: "{pushCred[`measurementId`]}"' \
+         ' };' \
+         'firebase.initializeApp(firebaseConfig);' \
+         'const messaging=firebase.messaging();' \
+         'messaging.setBackgroundMessageHandler(function (payload) {' \
+         '    console.log(payload);' \
+         '    const notification=JSON.parse(payload);' \
+         '    const notificationOption={' \
+         '        body:notification.body,' \
+         '        icon:notification.icon' \
+         '    };' \
+         '    return self.registration.showNotification(payload.notification.title,notificationOption);' \
+         '});'
 
+    return HttpResponse(data,content_type="text/javascript")
+
+def sendPushNotification(registration_ids , message_title , message_desc):
+    # fcm_api : Can be found in firebase console > cloud messaging > Server key
+    fcm_api = fcm_token
+    url = "https://fcm.googleapis.com/fcm/send"
+    
+    headers = {
+    "Content-Type":"application/json",
+    "Authorization": 'key='+fcm_token}
+
+    payload = {
+        "registration_ids" :registration_ids,
+        "priority" : "high",
+        "notification" : {
+            "body" : message_desc,
+            "title" : message_title,
+            "icon": "static/images/blood-logo.PNG"
+            
+        }
+    }
+
+    result = requests.post(url,  data=json.dumps(payload), headers=headers )
+    print(result.json())
+
+def sendPush(receiver,donor):
+    dref = db.reference('/users/user'+str(donor))
+    rref = db.reference('/users/user'+str(receiver))
+    donorToken = dref.child('push-token').get()
+    donorName = dref.child('name').get()
+    receiverName = rref.child('name').get()
+    # registration : Fcm token of user whom you need to send the notificaiton 
+    resgistration  = [donorToken]
+    sendPushNotification(resgistration , 'New Blood Request from '+receiverName,'Hello '+donorName+', You have received new blood request from '+receiverName)
+    return HttpResponse("sent")
     
 
 
@@ -212,6 +280,7 @@ def sendrequest(request):
         ref = db.reference('/users/user'+str(donid)+"/requests/")
         dbref = ref.get()
         exists = 0
+        sendPush(recid,donid)
         for i in dbref:
             # print(dbref[i])
             

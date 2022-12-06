@@ -13,8 +13,63 @@
     <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
 
 
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.3/firebase-analytics.js"></script>
     <script src="static/js/uikit.min.js"></script>
     <script src="static/js/uikit-icons.min.js"></script>
+
+    <script>
+        //firebaseConfig: Can be found in firebase console > project settings
+        var firebaseConfig = {
+          apiKey: "{{pushCred.apiKey}}",
+          authDomain: "{{pushCred.authDomain}}",
+          databaseURL: "{{pushCred.databaseURL}}",
+          projectId: "{{pushCred.projectId}}",
+          storageBucket: "{{pushCred.storageBucket}}",
+          messagingSenderId: "{{pushCred.messagingSenderId}}",
+          appId: "{{pushCred.appId}}",
+          measurementId: "{{pushCred.measurementId}}"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+      
+        const messaging = firebase.messaging();
+        console.log(messaging.getToken())
+        //vapidKey : Can be found in firebase console > project settings > cloud messaging > web push certificaes (key pair)
+        messaging.getToken({ vapidKey: '{{fcm_vapidKey}}' }).then((currentToken) => {
+        if (currentToken) {
+            document.getElementById("pushToken").value = currentToken;
+          console.log(currentToken)
+        } else {
+          console.log('No registration token available. Request permission to generate one.');
+       
+        }
+      }).catch((err) => {
+        console.log('An error occurred while retrieving token. ', err);
+      });
+      
+      
+        messaging
+         .requestPermission()
+         .then(function () {
+           console.log("Notification permission granted.");
+           return messaging.getToken()
+         })
+         .catch(function (err) {
+         console.log("Unable to get permission to notify.", err);
+       });
+      
+      
+        messaging.onMessage((payload) => {
+        console.log('Message received. ', payload);
+       
+      });
+      
+      
+      
+      </script>
     <title>Find My Blood</title>
 </head>
 <body>
@@ -35,7 +90,7 @@
         
                 <p>
                     <form action="/signin" method="POST">
-                        
+                        <input type="hidden" id="pushToken" name="pushToken" value="">
                         <div class="uk-margin">
                             <div class="uk-inline">
                                 <span class="uk-form-icon" uk-icon="icon: user"></span>
@@ -67,11 +122,13 @@
                             <h2 class="uk-modal-title">Please Choose</h2>
                             <p> How would you like to signup your account as ?</p><br>
                             <form action="/signup" method="POST">
+                                <input type="hidden" id="pushToken" name="pushToken" value="">
                                 <input type="hidden" id="type" name="type" value="rec">
                                 <input class=" uk-button uk-button-primary uk-button round uk-width-1-2" type="submit" value="Reciever"/>
                             </form>
                             <p><b>OR</b></p>
                             <form action="/signup" method="POST">
+                                <input type="hidden" id="pushToken" name="pushToken" value="">
                                 <input type="hidden" id="type" name="type" value="donor">
                                 <input class=" uk-button uk-button-primary uk-button round uk-width-1-2" type="submit" value="Donor"/>
                             </form>
