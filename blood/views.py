@@ -33,7 +33,7 @@ fcm_vapidKey = os.environ['fcm_vapidKey']
 fcm_token = os.environ['fcm_token']
 
 cred = credentials.Certificate("static/data/blood-ed205-firebase-adminsdk-eqmtk-cd30934137.json")
-pushCred = credentials.Certificate(json.loads(fcm_creds))
+pushCred = json.loads(fcm_creds)
 
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://blood-ed205-default-rtdb.firebaseio.com',
