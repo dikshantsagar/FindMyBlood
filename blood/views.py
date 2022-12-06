@@ -195,6 +195,7 @@ def home(request,user):
     else:
         history = [user['requests'][i] for i in user['requests']][1:]
     request.session['user'] = user
+    print("user details",user)
     # print(history)
     #add image
 

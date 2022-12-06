@@ -70,6 +70,16 @@
             </div>
             
             <div class="uk-card uk-card-default uk-width-expand uk-padding uk-margin-left ">
+                <div class="uk-position-top-right uk-padding">
+                    <form action="/signin" method="post">
+                        <input type="hidden" name="email" value="{{ user.email}}">
+                        <input type="hidden" name="password" value="{{ user.password }}">
+
+                        <a href="javascript:void();" class="uk-icon-link" uk-icon="refresh" onclick="this.closest('form').submit();return false;"></a>
+                    </form>
+                   
+                </div>
+                
                 {% if user.type == "Donor" %}
                 <h3 class="uk-text-left">Requests</h3>
                 <div class="uk-height-medium" style="overflow:scroll;">
@@ -103,10 +113,10 @@
                         
                         {% for i in history %}
                             {% if i.accepted == "true" %}
-                            <li>Blood Request accepted by <b>{{ i.from }}</b> on <b>{{ i.date }}.</b><a href="tel:+918383861754"><span class="uk-align-right" uk-icon="phone"></span></a></li>
+                            <li>Blood Request accepted by <b>{{ i.from }}</b> on <b>{{ i.date }}.</b><a href="tel:+918383861754" class="uk-align-right" ><span uk-icon="phone"></span></a></li>
                             {% endif %}
                             {% if i.accepted == "false" %}
-                            <li>Blood request to <b>{{ i.from }}</b> sent on  <b>{{ i.date }}</b>.<a href="#"><span class="uk-align-right" uk-icon="info"></span></a></li>
+                            <li>Blood request to <b>{{ i.from }}</b> sent on  <b>{{ i.date }}</b>.</li>
                             {% endif %}
                         {% endfor %}  
                         {% if not history %}
