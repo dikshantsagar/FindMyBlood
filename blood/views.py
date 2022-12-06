@@ -25,6 +25,7 @@ import os.path
 
 import math, random
 import json
+import requests
 
 firebase_creds = os.environ['firebase_creds']
 fcm_creds = os.environ['fcm_creds']
